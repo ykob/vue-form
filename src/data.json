@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "domain": "https://ykob.github.io/learn-gmail-api/",
+    "website_name": "learn-gmail-api",
+    "keywords": ""
+  },
+  "pages": {
+    "index": {
+      "title": "",
+      "keywords": "",
+      "description": "",
+      "path": "/",
+      "ogp_description": "",
+      "ogp_img": "ogp.jpg"
+    }
+  }
+}
