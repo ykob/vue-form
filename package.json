@@ -1,9 +1,9 @@
 {
-  "name": "learn-gmail-api",
+  "name": "vue-form",
   "description": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ykob/learn-gmail-api"
+    "url": "https://github.com/ykob/vue-form"
   },
   "private": true,
   "scripts": {
