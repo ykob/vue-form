@@ -5,4 +5,25 @@ block vars
     var page = pages.index;
 
 block content
-  #app
+  form(
+    id = "vue-form",
+    class = "p-vue-form",
+    action = "sendmail.php",
+  )
+    .p-vue-form__item
+      input(type="text", value="", placeholder="")
+    .p-vue-form__item
+      input(type="mail", value="", placeholder="")
+    .p-vue-form__item
+      input(type="radio", value="", placeholder="")
+      label
+        |Radio A
+    .p-vue-form__item
+      input(type="checkbox", value="", placeholder="")
+      label
+        |Radio A
+    .p-vue-form__item
+      select
+        option
+    .p-vue-form__item
+      input(type="file", value="")
