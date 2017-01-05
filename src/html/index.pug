@@ -10,20 +10,47 @@ block content
     class = "p-vue-form",
     action = "sendmail.php",
   )
+    h1.p-vue-form__head
+      |vue-form
     .p-vue-form__item
-      input(type="text", value="", placeholder="")
+      input(type="text", value="", placeholder="input text")
     .p-vue-form__item
-      input(type="mail", value="", placeholder="")
+      input(type="mail", value="", placeholder="input mail")
     .p-vue-form__item
-      input(type="radio", value="", placeholder="")
       label
+        input(type="radio", value="Radio A")
         |Radio A
-    .p-vue-form__item
-      input(type="checkbox", value="", placeholder="")
       label
-        |Radio A
+        input(type="radio", value="Radio B")
+        |Radio B
+      label
+        input(type="radio", value="Radio C")
+        |Radio C
+    .p-vue-form__item
+      label
+        input(type="checkbox", value="Checkbox A")
+        |Checkbox A
+      label
+        input(type="checkbox", value="Checkbox B")
+        |Checkbox B
+      label
+        input(type="checkbox", value="Checkbox C")
+        |Checkbox C
     .p-vue-form__item
       select
-        option
+        option(value="Select A")
+          |Select A
+        option(value="Select B")
+          |Select B
+        option(value="Select C")
+          |Select C
     .p-vue-form__item
       input(type="file", value="")
+    .p-vue-form__item
+      textarea(name="", cols="60", rows="8")
+    .p-vue-form__submit
+      .p-vue-form__submit-wrap
+        input(type="submit", value="Confirm input content")
+      .p-vue-form__submit-wrap
+        input(type="submit", value="Back")
+        input(type="submit", value="Submit")
