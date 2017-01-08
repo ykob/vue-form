@@ -41,4 +41,44 @@
     border: 1px solid #aaa;
     @include fontSize(14);
   }
+  &__radio {
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+  &__checkbox {
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+  &__label-wrap {
+    display: flex;
+    label {
+      display: block;
+      margin-right: 2rem;
+    }
+  }
+  &__submit {
+    margin: 3rem 0;
+    &-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  &__button {
+    appearance: none;
+    margin: 0 10px;
+    padding: 1.2rem 3rem;
+    border: 0;
+    border-radius: 4px;
+    letter-spacing: 0.1rem;
+    &--submit {
+      color: #fff;
+      background-color: #69c592;
+    }
+    &--utility {
+      color: #fff;
+      background-color: #aaa;
+    }
+  }
 }

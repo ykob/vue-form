@@ -27,27 +27,29 @@ block content
         .p-vue-form__item-head
           |radio button
         .p-vue-form__item-body
+          .p-vue-form__label-wrap
             label
-              input(type="radio", value="Radio A")
+              input(type="radio", name="radio" value="Radio A").p-vue-form__radio
               |Radio A
             label
-              input(type="radio", value="Radio B")
+              input(type="radio", name="radio", value="Radio B").p-vue-form__radio
               |Radio B
             label
-              input(type="radio", value="Radio C")
+              input(type="radio", name="radio", value="Radio C").p-vue-form__radio
               |Radio C
       .p-vue-form__item
         .p-vue-form__item-head
           |checkbox
         .p-vue-form__item-body
+          .p-vue-form__label-wrap
             label
-              input(type="checkbox", value="Checkbox A")
+              input(type="checkbox", value="Checkbox A").p-vue-form__checkbox
               |Checkbox A
             label
-              input(type="checkbox", value="Checkbox B")
+              input(type="checkbox", value="Checkbox B").p-vue-form__checkbox
               |Checkbox B
             label
-              input(type="checkbox", value="Checkbox C")
+              input(type="checkbox", value="Checkbox C").p-vue-form__checkbox
               |Checkbox C
       .p-vue-form__item
         .p-vue-form__item-head
@@ -72,7 +74,7 @@ block content
           textarea(name="", cols="60", rows="8").p-vue-form__textarea
     .p-vue-form__submit
       .p-vue-form__submit-wrap
-        input(type="submit", value="Confirm input content")
+        input(type="submit", value="Confirm input content").p-vue-form__button.p-vue-form__button--submit
       .p-vue-form__submit-wrap
-        input(type="submit", value="Back")
-        input(type="submit", value="Submit")
+        input(type="submit", value="Back").p-vue-form__button.p-vue-form__button--utility
+        input(type="submit", value="Submit").p-vue-form__button.p-vue-form__button--submit
