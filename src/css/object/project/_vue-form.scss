@@ -3,11 +3,21 @@
   margin: 100px auto;
   @include fontSize(14);
   &__head {
-    margin: 0 0 2rem;
+    margin: 0 0 5rem;
     font-weight: 400;
     text-align: center;
     letter-spacing: 0.14em;
     @include fontSize(32);
+  }
+  &__step {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 3rem;
+    &-item {
+      margin: 0 1rem;
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
   }
   &__item {
     display: flex;
