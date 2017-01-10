@@ -8,7 +8,7 @@ block content
   form(
     id = "vue-form",
     class = "p-vue-form",
-    action = "sendmail.php",
+    @submit="submit",
   )
     h1.p-vue-form__head
       |vue-form
@@ -80,8 +80,10 @@ block content
         .p-vue-form__item-body
           textarea(name="", cols="60", rows="8").p-vue-form__textarea
     .p-vue-form__submit
-      .p-vue-form__submit-wrap
+      .p-vue-form__submit-wrap(v-show="step == 0")
         input(type="submit", value="Confirm input content").p-vue-form__button.p-vue-form__button--submit
-      .p-vue-form__submit-wrap
+      .p-vue-form__submit-wrap(v-show="step == 1")
         input(type="submit", value="Back").p-vue-form__button.p-vue-form__button--utility
         input(type="submit", value="Submit").p-vue-form__button.p-vue-form__button--submit
+      .p-vue-form__submit-wrap(v-show="step == 2")
+        input(type="submit", value="Back to Home").p-vue-form__button.p-vue-form__button--submit
