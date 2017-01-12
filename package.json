@@ -49,6 +49,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "js-util": "git://github.com/ykob/js-util.git",
     "jstransformer-markdown-it": "^2.0.0"
   }
 }
