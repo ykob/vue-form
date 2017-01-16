@@ -1,16 +1,16 @@
 import scroll from 'js-util/scrollInnerPage.js';
 
 export default function() {
+  const id = '#vue-form';
   return new Vue({
-    el: '#vue-form',
+    el: id,
     data: {
       input: {
         text: '',
         mail: '',
-        radio: '',
-        checkbox: '',
-        select: '',
-        attachment: '',
+        radio: 'Radio A',
+        checkbox: ['Checkbox A'],
+        select: 'Select A',
         multiText: '',
       },
       validation: {
@@ -19,11 +19,18 @@ export default function() {
         radio: null,
         checkbox: null,
         select: null,
-        attachment: null,
         multiText: null,
       },
+      errorMsg: {
+        text: [],
+        mail: [],
+        radio: [],
+        checkbox: [],
+        select: [],
+        multiText: [],
+      },
       elm: {
-        wrap: $('#vue-form')
+        form: $(id)
       },
       step: 0
     },
@@ -37,41 +44,49 @@ export default function() {
       }
     },
     methods: {
-      selectSex: function(i) {
-        this.input.sex = i;
+      matchRequire: function(val, errorMsg) {
+        const valid = !!val;
+        if (!valid) errorMsg.push('この項目は記入必須です。');
+        return valid;
       },
-      matchRequire: function(val) {
-        return !!val;
+      matchTel: function(val, errorMsg) {
+        const valid = !!String(val).match(/^[0-9０-９\-\ー]+$/);
+        if (!valid && !!val) errorMsg.push('電話番号を入力してください。');
+        return valid;
       },
-      matchTel: function(val) {
-        return !!String(val).match(/^[0-9０-９\-\ー]+$/);
+      matchMail: function(val, errorMsg) {
+        const valid = !!String(val).match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+        if (!valid && !!val) errorMsg.push('メールアドレスを入力してください。');
+        return valid;
       },
-      matchMail: function(val) {
-        return !!String(val).match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-      },
-      matchNumber: function(val) {
-        return !!String(val).match(/^[0-9０-９]+$/);
+      matchNumber: function(val, errorMsg) {
+        const valid = !!String(val).match(/^[0-9０-９]+$/);
+        if (!valid && !!val) errorMsg.push('数値を入力してください。');
+        return valid;
       },
       validateText: function() {
-        this.validation.text = this.matchRequire(this.input.text);
+        this.errorMsg.text = [];
+        this.validation.text = this.matchRequire(this.input.text, this.errorMsg.text);
       },
       validateMail: function() {
-        this.validation.mail = this.matchRequire(this.input.mail) && this.matchMail(this.input.mail);
+        this.errorMsg.mail = [];
+        this.validation.mail = this.matchRequire(this.input.mail, this.errorMsg.mail) && this.matchMail(this.input.mail, this.errorMsg.mail);
       },
       validateRadio: function() {
-        this.validation.radio = this.matchRequire(this.input.radio);
+        this.errorMsg.radio = [];
+        this.validation.radio = this.matchRequire(this.input.radio, this.errorMsg.radio);
       },
       validateCheckbox: function() {
-        this.validation.checkbox = this.matchRequire(this.input.checkbox);
+        this.errorMsg.checkbox = [];
+        this.validation.checkbox = this.matchRequire(this.input.checkbox, this.errorMsg.checkbox);
       },
       validateSelect: function() {
-        this.validation.select = this.matchRequire(this.input.select);
-      },
-      validateAttachment: function() {
-        this.validation.attachment = this.matchRequire(this.input.attachment);
+        this.errorMsg.select = [];
+        this.validation.select = this.matchRequire(this.input.select, this.errorMsg.select);
       },
       validateMultiText: function() {
-        this.validation.multiText = this.matchRequire(this.input.multiText);
+        this.errorMsg.multiText = [];
+        this.validation.multiText = this.matchRequire(this.input.multiText, this.errorMsg.multiText);
       },
       validateAll: function() {
         this.validateText();
@@ -79,7 +94,6 @@ export default function() {
         this.validateRadio();
         this.validateCheckbox();
         this.validateSelect();
-        this.validateAttachment();
         this.validateMultiText();
       },
       back: function() {
@@ -100,7 +114,7 @@ export default function() {
             $.ajax({
               url: '/sendmail.php',
               type: 'POST',
-              data: $('#vue-form').serialize()
+              data: this.elm.form.serialize()
             })
             .done(() => {
               this.step = 2;
@@ -108,7 +122,6 @@ export default function() {
               // ga('send', 'event', 'form', 'complete')
             })
             .fail((data) => {
-              alert(data);
               this.step = 0;
               this.scroll();
             })
@@ -118,7 +131,7 @@ export default function() {
       },
       scroll: function() {
         setTimeout(() => {
-          scroll(this.elm.wrap.offset().top, 600, 'easeOutQuart')
+          scroll(this.elm.form.offset().top, 600, 'easeOutQuart')
         }, 50);
       }
     }
