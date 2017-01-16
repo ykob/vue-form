@@ -21,13 +21,13 @@ block content
       .p-vue-form__step-item(:class="{ 'is-current' : step == 2 }")
         |Step3 : Finish
 
-    .p-vue-form__contents
+    .p-vue-form__contents(v-show="step < 2")
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |input text
         .p-vue-form__item-body
-          .p-vue-form__item-inner
+          .p-vue-form__item-inner(v-show="step == 0")
             input(
               type = "text",
               value = "",
@@ -35,15 +35,17 @@ block content
               class = "p-vue-form__input",
               v-model = "input.text.value"
             )
-          .p-vue-form__error-list.p-vue-form__error-list--next-input(v-show="input.text.validation == false")
-            .p-vue-form__error(v-for="item in input.text.error")
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
+            |{{ input.text.value }}
+          .p-vue-form__error.p-vue-form__error--next-input(v-show="input.text.validation == false")
+            span(v-for="item in input.text.error")
               |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |input mail
         .p-vue-form__item-body
-          .p-vue-form__item-inner
+          .p-vue-form__item-inner(v-show="step == 0")
             input(
               type = "mail",
               value = "",
@@ -51,15 +53,17 @@ block content
               class = "p-vue-form__input",
               v-model = "input.mail.value"
             )
-          .p-vue-form__error-list.p-vue-form__error-list--next-input(v-show="input.mail.validation == false")
-            .p-vue-form__error(v-for="item in input.mail.error")
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
+            |{{ input.mail.value }}
+          .p-vue-form__error.p-vue-form__error--next-input(v-show="input.mail.validation == false")
+            span(v-for="item in input.mail.error")
               |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |radio button
         .p-vue-form__item-body
-          .p-vue-form__item-inner.p-vue-form__label-wrap
+          .p-vue-form__item-inner.p-vue-form__label-wrap(v-show="step == 0")
             label
               input(
                 type = "radio",
@@ -87,15 +91,17 @@ block content
                 class = "p-vue-form__radio"
               )
               |Radio C
-          .p-vue-form__error-list(v-show="input.radio.validation == false")
-            .p-vue-form__error(v-for="item in input.radio.error")
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
+            |{{ input.radio.value }}
+          .p-vue-form__error(v-show="input.radio.validation == false")
+            span(v-for="item in input.radio.error")
               |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |checkbox
         .p-vue-form__item-body
-          .p-vue-form__item-inner.p-vue-form__label-wrap
+          .p-vue-form__item-inner.p-vue-form__label-wrap(v-show="step == 0")
             label
               input(
                 type = "checkbox", 
@@ -120,15 +126,18 @@ block content
                 class = "p-vue-form__checkbox"
               )
               |Checkbox C
-          .p-vue-form__error-list(v-show="input.checkbox.validation == false")
-            .p-vue-form__error(v-for="item in input.checkbox.error")
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
+            span.p-vue-form__confirm-item(v-for="(item, index) in input.checkbox.value")
+              |{{ item }}
+          .p-vue-form__error(v-show="input.checkbox.validation == false")
+            span(v-for="item in input.checkbox.error")
               |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |select
         .p-vue-form__item-body
-          .p-vue-form__item-inner
+          .p-vue-form__item-inner(v-show="step == 0")
             select(
               v-model = "input.select.value"
             )
@@ -138,24 +147,32 @@ block content
                 |Select B
               option(value="Select C")
                 |Select C
-          .p-vue-form__error-list(v-show="input.select.validation == false")
-            .p-vue-form__error(v-for="item in input.select.error")
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
+            |{{ input.select.value }}
+          .p-vue-form__error(v-show="input.select.validation == false")
+            span(v-for="item in input.select.error")
               |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |multi column text
         .p-vue-form__item-body
-          .p-vue-form__item-inner
+          .p-vue-form__item-inner(v-show="step == 0")
             textarea(
               cols = "60",
               rows = "8",
               v-model = "input.multiText.value",
               class = "p-vue-form__textarea"
             )
-          .p-vue-form__error-list.p-vue-form__error-list--next-input(v-show="input.multiText.validation == false")
-            .p-vue-form__error(v-for="item in input.multiText.error")
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
+            |{{ input.multiText.value }}
+          .p-vue-form__error.p-vue-form__error--next-input(v-show="input.multiText.validation == false")
+            span(v-for="item in input.multiText.error")
               |{{ item }}
+
+    .p-vue-form__complete(v-show="step == 2")
+      p
+        |thank you for a message!
 
     .p-vue-form__submit
       .p-vue-form__submit-wrap(v-show="step == 0")
@@ -168,16 +185,18 @@ block content
         input(
           type = "submit",
           value = "Back",
-          class = "p-vue-form__button p-vue-form__button--utility"
+          class = "p-vue-form__button p-vue-form__button--utility",
+          @click = "back"
         )
         input(
           type = "submit",
-          value = "Submit",
+          value = "Send Mail",
           class = "p-vue-form__button p-vue-form__button--submit"
         )
       .p-vue-form__submit-wrap(v-show="step == 2")
         input(
           type = "submit",
           value = "Back to Home",
-          class = "p-vue-form__button p-vue-form__button--submit"
+          class = "p-vue-form__button p-vue-form__button--submit",
+          @click = "reset"
         )

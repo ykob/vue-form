@@ -7,32 +7,38 @@ export default function() {
     data: {
       input: {
         text: {
-          value: '',
+          default: '',
+          value: null,
           validation: null,
           error: []
         },
         mail: {
-          value: '',
+          default: '',
+          value: null,
           validation: null,
           error: []
         },
         radio: {
-          value: 'Radio A',
+          default: 'Radio A',
+          value: null,
           validation: null,
           error: []
         },
         checkbox: {
-          value: [],
+          default: [],
+          value: null,
           validation: null,
           error: []
         },
         select: {
-          value: 'Select A',
+          default: 'Select A',
+          value: null,
           validation: null,
           error: []
         },
         multiText: {
-          value: '',
+          default: '',
+          value: null,
           validation: null,
           error: []
         },
@@ -41,6 +47,9 @@ export default function() {
         form: $(id)
       },
       step: 0
+    },
+    mounted: function() {
+      this.initForm();
     },
     computed: {
       isValid: function() {
@@ -52,6 +61,13 @@ export default function() {
       }
     },
     methods: {
+      initForm: function() {
+        for (var key in this.input) {
+          this.input[key].value = this.input[key].default;
+          this.input[key].validation = null;
+          this.input[key].error = [];
+        }
+      },
       initInput: function(input){
         input.validation = true;
         input.error = [];
@@ -109,8 +125,15 @@ export default function() {
         this.validateSelect();
         this.validateMultiText();
       },
-      back: function() {
+      back: function(event) {
+        event.preventDefault();
         this.step = 0;
+        this.scroll();
+      },
+      reset: function(event) {
+        event.preventDefault();
+        this.step = 0;
+        this.initForm();
         this.scroll();
       },
       submit: function(event) {
@@ -124,20 +147,22 @@ export default function() {
             this.scroll();
             break;
           case 1:
-            $.ajax({
-              url: '/sendmail.php',
-              type: 'POST',
-              data: this.elm.form.serialize()
-            })
-            .done(() => {
-              this.step = 2;
-              this.scroll();
-              // ga('send', 'event', 'form', 'complete')
-            })
-            .fail((data) => {
-              this.step = 0;
-              this.scroll();
-            })
+            // $.ajax({
+            //   url: '/sendmail.php',
+            //   type: 'POST',
+            //   data: this.elm.form.serialize()
+            // })
+            // .done(() => {
+            //   this.step = 2;
+            //   this.scroll();
+            //   ga('send', 'event', 'form', 'complete')
+            // })
+            // .fail((data) => {
+            //   this.step = 0;
+            //   this.scroll();
+            // })
+            this.step = 2;
+            this.scroll();
             break;
           default:
         }

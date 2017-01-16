@@ -74,14 +74,33 @@
       margin-right: 2rem;
     }
   }
-  &__error-list {
+  &__error {
+    color: #d33;
+    font-weight: 700;
     &--next-input {
       margin-top: 0.5rem;
     }
   }
-  &__error {
-    color: #d33;
-    font-weight: 700;
+  &__confirm {
+    white-space: pre-wrap;
+    &-item {
+      display: inline-block;
+      &:after {
+        content: '/';
+        margin: 0 1rem;
+      }
+      &:last-of-type {
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+  &__complete {
+    margin: 8rem 0 4rem;
+    @include fontSize(16);
+    text-align: center;
+    letter-spacing: 0.16em;
   }
   &__submit {
     margin: 3rem 0;
