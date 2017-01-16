@@ -4,6 +4,7 @@ html {
 body {
   min-height: 100%;
   overflow-y: scroll;
+  color: $color-text-black;
   font-family: $font-jp;
 }
 // input, button, select {
@@ -15,4 +16,9 @@ body {
 ::selection {
   color: #fff;
   background: rgba(0, 0, 0, 0.8);
+}
+input::selection,
+textarea::selection {
+  color: $color-text-black;
+  background: rgba(0, 0, 0, 0.2);
 }
