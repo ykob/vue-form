@@ -17,6 +17,10 @@
       margin: 0 1rem;
       letter-spacing: 0.1em;
       text-align: center;
+      &.is-current {
+        color: #69c592;
+        font-weight: 700;
+      }
     }
   }
   &__item {
