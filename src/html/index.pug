@@ -24,41 +24,48 @@ block content
     .p-vue-form__contents
       .p-vue-form__item
         .p-vue-form__item-head
-          |input text
+          .p-vue-form__item-inner
+            |input text
         .p-vue-form__item-body
-          input(
-            type = "text",
-            value = "",
-            placeholder = "input text",
-            class = "p-vue-form__input",
-            v-model = "input.text"
-          )
-          .p-vue-form__item-error(v-show="validation.text == false")
-            |{{ errorMsg.text }}
+          .p-vue-form__item-inner
+            input(
+              type = "text",
+              value = "",
+              placeholder = "input text",
+              class = "p-vue-form__input",
+              v-model = "input.text.value"
+            )
+          .p-vue-form__error-list.p-vue-form__error-list--next-input(v-show="input.text.validation == false")
+            .p-vue-form__error(v-for="item in input.text.error")
+              |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
-          |input mail
+          .p-vue-form__item-inner
+            |input mail
         .p-vue-form__item-body
-          input(
-            type = "mail",
-            value = "",
-            placeholder = "input mail",
-            class = "p-vue-form__input",
-            v-model = "input.mail"
-          )
-          .p-vue-form__item-error(v-show="validation.mail == false")
-            |{{ errorMsg.mail }}
+          .p-vue-form__item-inner
+            input(
+              type = "mail",
+              value = "",
+              placeholder = "input mail",
+              class = "p-vue-form__input",
+              v-model = "input.mail.value"
+            )
+          .p-vue-form__error-list.p-vue-form__error-list--next-input(v-show="input.mail.validation == false")
+            .p-vue-form__error(v-for="item in input.mail.error")
+              |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
-          |radio button
+          .p-vue-form__item-inner
+            |radio button
         .p-vue-form__item-body
-          .p-vue-form__label-wrap
+          .p-vue-form__item-inner.p-vue-form__label-wrap
             label
               input(
                 type = "radio",
                 name = "radio",
                 value = "Radio A",
-                v-model = "input.radio",
+                v-model = "input.radio.value",
                 class = "p-vue-form__radio"
               )
               |Radio A
@@ -67,7 +74,7 @@ block content
                 type = "radio",
                 name = "radio",
                 value = "Radio B",
-                v-model = "input.radio",
+                v-model = "input.radio.value",
                 class = "p-vue-form__radio"
               )
               |Radio B
@@ -76,22 +83,24 @@ block content
                 type = "radio",
                 name = "radio",
                 value = "Radio C",
-                v-model = "input.radio",
+                v-model = "input.radio.value",
                 class = "p-vue-form__radio"
               )
               |Radio C
-          .p-vue-form__item-error(v-show="validation.radio == false")
-            |{{ errorMsg.radio }}
+          .p-vue-form__error-list(v-show="input.radio.validation == false")
+            .p-vue-form__error(v-for="item in input.radio.error")
+              |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
-          |checkbox
+          .p-vue-form__item-inner
+            |checkbox
         .p-vue-form__item-body
-          .p-vue-form__label-wrap
+          .p-vue-form__item-inner.p-vue-form__label-wrap
             label
               input(
                 type = "checkbox", 
                 value = "Checkbox A", 
-                v-model = "input.checkbox",
+                v-model = "input.checkbox.value",
                 class = "p-vue-form__checkbox"
               )
               |Checkbox A
@@ -99,7 +108,7 @@ block content
               input(
                 type = "checkbox", 
                 value = "Checkbox B", 
-                v-model = "input.checkbox",
+                v-model = "input.checkbox.value",
                 class = "p-vue-form__checkbox"
               )
               |Checkbox B
@@ -107,39 +116,46 @@ block content
               input(
                 type = "checkbox", 
                 value = "Checkbox C", 
-                v-model = "input.checkbox",
+                v-model = "input.checkbox.value",
                 class = "p-vue-form__checkbox"
               )
               |Checkbox C
-          .p-vue-form__item-error(v-show="validation.checkbox == false")
-            |{{ errorMsg.checkbox }}
+          .p-vue-form__error-list(v-show="input.checkbox.validation == false")
+            .p-vue-form__error(v-for="item in input.checkbox.error")
+              |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
-          |select
+          .p-vue-form__item-inner
+            |select
         .p-vue-form__item-body
-          select(
-            v-model = "input.select"
-          )
-            option(value="Select A")
-              |Select A
-            option(value="Select B")
-              |Select B
-            option(value="Select C")
-              |Select C
-          .p-vue-form__item-error(v-show="validation.select == false")
-            |{{ errorMsg.select }}
+          .p-vue-form__item-inner
+            select(
+              v-model = "input.select.value"
+            )
+              option(value="Select A")
+                |Select A
+              option(value="Select B")
+                |Select B
+              option(value="Select C")
+                |Select C
+          .p-vue-form__error-list(v-show="input.select.validation == false")
+            .p-vue-form__error(v-for="item in input.select.error")
+              |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
-          |multi column text
+          .p-vue-form__item-inner
+            |multi column text
         .p-vue-form__item-body
-          textarea(
-            cols = "60",
-            rows = "8",
-            v-model = "input.multiText",
-            class = "p-vue-form__textarea"
-          )
-          .p-vue-form__item-error(v-show="validation.multiText == false")
-            |{{ errorMsg.multiText }}
+          .p-vue-form__item-inner
+            textarea(
+              cols = "60",
+              rows = "8",
+              v-model = "input.multiText.value",
+              class = "p-vue-form__textarea"
+            )
+          .p-vue-form__error-list.p-vue-form__error-list--next-input(v-show="input.multiText.validation == false")
+            .p-vue-form__error(v-for="item in input.multiText.error")
+              |{{ item }}
 
     .p-vue-form__submit
       .p-vue-form__submit-wrap(v-show="step == 0")

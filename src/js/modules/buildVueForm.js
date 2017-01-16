@@ -6,28 +6,36 @@ export default function() {
     el: id,
     data: {
       input: {
-        text: '',
-        mail: '',
-        radio: 'Radio A',
-        checkbox: ['Checkbox A'],
-        select: 'Select A',
-        multiText: '',
-      },
-      validation: {
-        text: null,
-        mail: null,
-        radio: null,
-        checkbox: null,
-        select: null,
-        multiText: null,
-      },
-      errorMsg: {
-        text: [],
-        mail: [],
-        radio: [],
-        checkbox: [],
-        select: [],
-        multiText: [],
+        text: {
+          value: '',
+          validation: null,
+          error: []
+        },
+        mail: {
+          value: '',
+          validation: null,
+          error: []
+        },
+        radio: {
+          value: 'Radio A',
+          validation: null,
+          error: []
+        },
+        checkbox: {
+          value: [],
+          validation: null,
+          error: []
+        },
+        select: {
+          value: 'Select A',
+          validation: null,
+          error: []
+        },
+        multiText: {
+          value: '',
+          validation: null,
+          error: []
+        },
       },
       elm: {
         form: $(id)
@@ -37,56 +45,61 @@ export default function() {
     computed: {
       isValid: function() {
         var valid = true;
-        for (var key in this.validation) {
-          if (!this.validation[key]) valid = false;
+        for (var key in this.input) {
+          if (!this.input[key].validation) valid = false;
         }
         return valid
       }
     },
     methods: {
-      matchRequire: function(val, errorMsg) {
-        const valid = !!val;
-        if (!valid) errorMsg.push('この項目は記入必須です。');
-        return valid;
+      initInput: function(input){
+        input.validation = true;
+        input.error = [];
       },
-      matchTel: function(val, errorMsg) {
-        const valid = !!String(val).match(/^[0-9０-９\-\ー]+$/);
-        if (!valid && !!val) errorMsg.push('電話番号を入力してください。');
-        return valid;
+      matchRequire: function(input) {
+        const valid = (input.value.length > 0);
+        if (!valid) input.error.push('この項目は記入必須です。');
+        if (input.validation === (true || null)) input.validation = valid;
       },
-      matchMail: function(val, errorMsg) {
-        const valid = !!String(val).match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-        if (!valid && !!val) errorMsg.push('メールアドレスを入力してください。');
-        return valid;
+      matchTel: function(input) {
+        const valid = !!String(input.value).match(/^[0-9０-９\-\ー]+$/);
+        if (!valid && !!input.value) input.error.push('電話番号を入力してください。');
+        if (input.validation === (true || null)) input.validation = valid;
       },
-      matchNumber: function(val, errorMsg) {
-        const valid = !!String(val).match(/^[0-9０-９]+$/);
-        if (!valid && !!val) errorMsg.push('数値を入力してください。');
-        return valid;
+      matchMail: function(input) {
+        const valid = !!String(input.value).match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+        if (!valid && !!input.value) input.error.push('メールアドレスを入力してください。');
+        if (input.validation === (true || null)) input.validation = valid;
+      },
+      matchNumber: function(input) {
+        const valid = !!String(input.value).match(/^[0-9０-９]+$/);
+        if (!valid && !!input.value) input.error.push('数値を入力してください。');
+        if (input.validation === (true || null)) input.validation = valid;
       },
       validateText: function() {
-        this.errorMsg.text = [];
-        this.validation.text = this.matchRequire(this.input.text, this.errorMsg.text);
+        this.initInput(this.input.text);
+        this.matchRequire(this.input.text);
       },
       validateMail: function() {
-        this.errorMsg.mail = [];
-        this.validation.mail = this.matchRequire(this.input.mail, this.errorMsg.mail) && this.matchMail(this.input.mail, this.errorMsg.mail);
+        this.initInput(this.input.mail);
+        this.matchRequire(this.input.mail);
+        this.matchMail(this.input.mail);
       },
       validateRadio: function() {
-        this.errorMsg.radio = [];
-        this.validation.radio = this.matchRequire(this.input.radio, this.errorMsg.radio);
+        this.initInput(this.input.radio);
+        this.matchRequire(this.input.radio);
       },
       validateCheckbox: function() {
-        this.errorMsg.checkbox = [];
-        this.validation.checkbox = this.matchRequire(this.input.checkbox, this.errorMsg.checkbox);
+        this.initInput(this.input.checkbox);
+        this.matchRequire(this.input.checkbox);
       },
       validateSelect: function() {
-        this.errorMsg.select = [];
-        this.validation.select = this.matchRequire(this.input.select, this.errorMsg.select);
+        this.initInput(this.input.select);
+        this.matchRequire(this.input.select);
       },
       validateMultiText: function() {
-        this.errorMsg.multiText = [];
-        this.validation.multiText = this.matchRequire(this.input.multiText, this.errorMsg.multiText);
+        this.initInput(this.input.multiText);
+        this.matchRequire(this.input.multiText);
       },
       validateAll: function() {
         this.validateText();
