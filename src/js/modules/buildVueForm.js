@@ -92,6 +92,9 @@ export default function() {
         if (!valid && !!input.value) input.error.push('数値を入力してください。');
         if (input.validation === (true || null)) input.validation = valid;
       },
+      noValidation: function(input) {
+        input.validation = true;
+      },
       validateText: function() {
         this.initInput(this.input.text);
         this.matchRequire(this.input.text);
