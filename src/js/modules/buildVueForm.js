@@ -153,7 +153,7 @@ export default function() {
             // $.ajax({
             //   url: '/sendmail.php',
             //   type: 'POST',
-            //   data: this.elm.form.serialize()
+            //   data: $(id).serialize()
             // })
             // .done(() => {
             //   this.step = 2;
