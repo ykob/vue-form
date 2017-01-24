@@ -37,9 +37,10 @@
     $recipient_admin = "info@tplh.net";
 
     // Set the email subject.
-    $subject_admin = "$name 様よりお問合せがありました。";
+    $subject_admin = "$name 様よりお問い合わせがありました。";
 
     // Build the email content.
+    $email_content_admin = "ウェブサイトのフォームからお問い合わせがありました。\n内容は以下のとおりです。\n\n";
     $email_content_admin .= $email_content;
 
     // Build the email headers.
@@ -53,9 +54,11 @@
     $recipient_user = $mail;
 
     // Set the email subject.
-    $subject_user = "お問合せありがとうございました。";
+    $subject_user = "お問い合わせありがとうございました。";
 
     // Build the email content.
+    $email_content_user  = "$name 様\n\n";
+    $email_content_user .= "この度はお問い合わせいただきましてありがとうございました。\n以下の内容にて承りました。\n\n";
     $email_content_user .= "$email_content\n";
 
     // Build the email headers.
