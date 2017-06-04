@@ -75,22 +75,22 @@ export default function() {
       matchRequire: function(input) {
         const valid = (input.value.length > 0);
         if (!valid) input.error.push('この項目は記入必須です。');
-        if (input.validation === (true || null)) input.validation = valid;
+        if (input.validation === true || input.validation === null) input.validation = valid;
       },
       matchTel: function(input) {
         const valid = !!String(input.value).match(/^[0-9０-９\-\ー]+$/);
         if (!valid && !!input.value) input.error.push('電話番号を入力してください。');
-        if (input.validation === (true || null)) input.validation = valid;
+        if (input.validation === true || input.validation === null) input.validation = valid;
       },
       matchMail: function(input) {
         const valid = !!String(input.value).match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
         if (!valid && !!input.value) input.error.push('メールアドレスを入力してください。');
-        if (input.validation === (true || null)) input.validation = valid;
+        if (input.validation === true || input.validation === null) input.validation = valid;
       },
       matchNumber: function(input) {
         const valid = !!String(input.value).match(/^[0-9０-９]+$/);
         if (!valid && !!input.value) input.error.push('数値を入力してください。');
-        if (input.validation === (true || null)) input.validation = valid;
+        if (input.validation === true || input.validation === null) input.validation = valid;
       },
       noValidation: function(input) {
         input.validation = true;
