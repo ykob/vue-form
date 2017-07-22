@@ -1,3 +1,5 @@
+import serialize from 'form-serialize';
+
 export default function() {
   return new Vue({
     el: '#vue-form',
@@ -135,6 +137,7 @@ export default function() {
       },
       submit: function(event) {
         event.preventDefault();
+        console.log(serialize(this.$el));
         switch (this.step) {
           case 0:
             this.validateAll();
