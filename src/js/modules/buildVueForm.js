@@ -1,4 +1,4 @@
-import serialize from 'form-serialize';
+import Vue from 'vue/dist/vue.min';
 
 export default function() {
   return new Vue({
@@ -42,7 +42,7 @@ export default function() {
           error: []
         },
       },
-      step: 0
+      step: 0,
     },
     mounted: function() {
       this.initForm();
@@ -137,7 +137,6 @@ export default function() {
       },
       submit: function(event) {
         event.preventDefault();
-        console.log(serialize(this.$el));
         switch (this.step) {
           case 0:
             this.validateAll();
@@ -147,21 +146,15 @@ export default function() {
             this.scroll();
             break;
           case 1:
-            // $.ajax({
-            //   url: '/sendmail.php',
-            //   type: 'POST',
-            //   data: $(id).serialize()
-            // })
-            // .done(() => {
-            //   this.step = 2;
-            //   this.scroll();
-            //   ga('send', 'event', 'form', 'complete')
-            // })
-            // .fail((data) => {
-            //   this.step = 0;
-            //   this.scroll();
-            // })
-            this.step = 2;
+            const xhr = new XMLHttpRequest();
+            const formData = new FormData(this.$el);
+            xhr.addEventListener('load', (event) => {
+              this.step = 2;
+            });
+            xhr.addEventListener('error', (event) => {
+            });
+            xhr.open('POST', '/sendmail.php');
+            xhr.send(formData);
             break;
           default:
         }
