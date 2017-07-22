@@ -6,7 +6,7 @@
     $text = strip_tags(trim($_POST["text"]));
     $text = str_replace(array("\r","\n"),array(" "," "),$text);
     $mail = filter_var(trim($_POST["mail"]), FILTER_SANITIZE_EMAIL);
-    $content = strip_tags(trim($_POST["content"]));
+    $content = strip_tags(trim($_POST["multiText"]));
 
     // Check that data was sent to the mailer.
     if (
