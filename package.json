@@ -45,12 +45,13 @@
     "require-dir": "^0.3.1",
     "run-sequence": "^1.2.2",
     "vinyl-source-stream": "^1.1.0",
-    "vueify": "^9.4.0",
+    "vueify": "^9.4.1",
     "watchify": "^3.7.0"
   },
   "dependencies": {
     "form-serialize": "^0.7.2",
     "js-util": "git://github.com/ykob/js-util.git",
-    "jstransformer-markdown-it": "^2.0.0"
+    "jstransformer-markdown-it": "^2.0.0",
+    "vue": "^2.4.2"
   }
 }
