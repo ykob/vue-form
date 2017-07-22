@@ -30,6 +30,7 @@ block content
           .p-vue-form__item-inner(v-show="step == 0")
             input(
               type = "text",
+              name = "inputText",
               value = "",
               placeholder = "input text",
               class = "p-vue-form__input",
@@ -48,6 +49,7 @@ block content
           .p-vue-form__item-inner(v-show="step == 0")
             input(
               type = "mail",
+              name = "inputMail",
               value = "",
               placeholder = "input mail",
               class = "p-vue-form__input",
@@ -104,7 +106,8 @@ block content
           .p-vue-form__item-inner.p-vue-form__label-wrap(v-show="step == 0")
             label
               input(
-                type = "checkbox", 
+                type = "checkbox",
+                name = "checkbox",
                 value = "Checkbox A", 
                 v-model = "input.checkbox.value",
                 class = "p-vue-form__checkbox"
@@ -112,7 +115,8 @@ block content
               |Checkbox A
             label
               input(
-                type = "checkbox", 
+                type = "checkbox",
+                name = "checkbox",
                 value = "Checkbox B", 
                 v-model = "input.checkbox.value",
                 class = "p-vue-form__checkbox"
@@ -120,7 +124,8 @@ block content
               |Checkbox B
             label
               input(
-                type = "checkbox", 
+                type = "checkbox",
+                name = "checkbox",
                 value = "Checkbox C", 
                 v-model = "input.checkbox.value",
                 class = "p-vue-form__checkbox"
@@ -139,6 +144,7 @@ block content
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
             select(
+              name = "select",
               v-model = "input.select.value"
             )
               option(value="Select A")
@@ -159,6 +165,7 @@ block content
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
             textarea(
+              name = "multiText",
               cols = "60",
               rows = "8",
               v-model = "input.multiText.value",
