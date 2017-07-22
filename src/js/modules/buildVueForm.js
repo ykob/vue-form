@@ -1,9 +1,6 @@
-import scroll from 'js-util/scrollInnerPage.js';
-
 export default function() {
-  const id = '#vue-form';
   return new Vue({
-    el: id,
+    el: '#vue-form',
     data: {
       input: {
         text: {
@@ -42,9 +39,6 @@ export default function() {
           validation: null,
           error: []
         },
-      },
-      elm: {
-        form: $(id)
       },
       step: 0
     },
@@ -165,15 +159,11 @@ export default function() {
             //   this.scroll();
             // })
             this.step = 2;
-            this.scroll();
             break;
           default:
         }
       },
       scroll: function() {
-        setTimeout(() => {
-          scroll(this.elm.form.offset().top, 600, 'easeOutQuart')
-        }, 50);
       }
     }
   })
