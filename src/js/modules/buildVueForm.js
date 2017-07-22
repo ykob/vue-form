@@ -91,38 +91,41 @@ export default function() {
       noValidation: function(input) {
         input.validation = true;
       },
-      validateText: function() {
-        this.initInput(this.input.text);
-        this.matchRequire(this.input.text);
-      },
-      validateMail: function() {
-        this.initInput(this.input.mail);
-        this.matchRequire(this.input.mail);
-        this.matchMail(this.input.mail);
-      },
-      validateRadio: function() {
-        this.initInput(this.input.radio);
-        this.matchRequire(this.input.radio);
-      },
-      validateCheckbox: function() {
-        this.initInput(this.input.checkbox);
-        this.matchRequire(this.input.checkbox);
-      },
-      validateSelect: function() {
-        this.initInput(this.input.select);
-        this.matchRequire(this.input.select);
-      },
-      validateMultiText: function() {
-        this.initInput(this.input.multiText);
-        this.matchRequire(this.input.multiText);
+      validate: function(key) {
+        switch (key) {
+          case 'text':
+            this.initInput(this.input.text);
+            this.matchRequire(this.input.text);
+            break;
+          case 'mail':
+            this.initInput(this.input.mail);
+            this.matchRequire(this.input.mail);
+            this.matchMail(this.input.mail);
+            break;
+          case 'radio':
+            this.initInput(this.input.radio);
+            this.matchRequire(this.input.radio);
+            break;
+          case 'checkbox':
+            this.initInput(this.input.checkbox);
+            this.matchRequire(this.input.checkbox);
+            break;
+          case 'select':
+            this.initInput(this.input.select);
+            this.matchRequire(this.input.select);
+            break;
+          case 'multiText':
+            this.initInput(this.input.multiText);
+            this.matchRequire(this.input.multiText);
+            break;
+
+          default:
+        }
       },
       validateAll: function() {
-        this.validateText();
-        this.validateMail();
-        this.validateRadio();
-        this.validateCheckbox();
-        this.validateSelect();
-        this.validateMultiText();
+        for (var key in this.input) {
+          this.validate(key);
+        }
       },
       back: function(event) {
         event.preventDefault();
