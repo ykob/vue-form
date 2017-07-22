@@ -1,12 +1,17 @@
 <?php
+  function removeCRLF($str) {
+    return str_replace(array("\r","\n"), array(" ", " "), $str);
+  }
+  function removeHtml($str) {
+    return strip_tags(trim($str));
+  }
 
   // Only process POST reqeusts.
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the form fields and remove whitespace.
-    $text = strip_tags(trim($_POST["text"]));
-    $text = str_replace(array("\r","\n"),array(" "," "),$text);
+    $text = removeCRLF(removeHtml($_POST["text"]));
     $mail = filter_var(trim($_POST["mail"]), FILTER_SANITIZE_EMAIL);
-    $content = strip_tags(trim($_POST["multiText"]));
+    $content = removeHtml($_POST["multiText"]);
 
     // Check that data was sent to the mailer.
     if (
