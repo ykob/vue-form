@@ -11,12 +11,15 @@
     // Get the form fields and remove whitespace.
     $text = removeCRLF(removeHtml($_POST["text"]));
     $mail = filter_var(trim($_POST["mail"]), FILTER_SANITIZE_EMAIL);
-    $content = removeHtml($_POST["multiText"]);
+    $radio = removeHtml($_POST["radio"]);
+    $checkbox = removeHtml(implode(" / ", $_POST["checkbox"]));
+    $select = removeHtml(implode(" / ", $_POST["select"]));
+    $multi_text = removeHtml($_POST["multiText"]);
 
     // Check that data was sent to the mailer.
     if (
       empty($text) OR
-      empty($content) OR
+      empty($multi_text) OR
       !filter_var($mail, FILTER_VALIDATE_EMAIL)
     ) {
       // Set a 400 (bad request) response code and exit.
@@ -32,7 +35,10 @@
     $email_content = "";
     $email_content .= "$text\n";
     $email_content .= "$mail\n";
-    $email_content .= "$content\n";
+    $email_content .= "$radio\n";
+    $email_content .= "$checkbox\n";
+    $email_content .= "$select\n";
+    $email_content .= "$multi_text\n";
 
     // ------------------------------------
     // For Admin
