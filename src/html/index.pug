@@ -34,7 +34,8 @@ block content
               value = "",
               placeholder = "input text",
               class = "p-vue-form__input",
-              v-model = "input.text.value"
+              v-model = "input.text.value",
+              @focusout = 'validate("text")',
             )
           .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
             |{{ input.text.value }}
@@ -53,7 +54,8 @@ block content
               value = "",
               placeholder = "input mail",
               class = "p-vue-form__input",
-              v-model = "input.mail.value"
+              v-model = "input.mail.value",
+              @focusout = 'validate("mail")',
             )
           .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
             |{{ input.mail.value }}
@@ -110,7 +112,8 @@ block content
                 name = "checkbox[]",
                 value = "Checkbox A", 
                 v-model = "input.checkbox.value",
-                class = "p-vue-form__checkbox"
+                class = "p-vue-form__checkbox",
+                @change = 'validate("checkbox")',
               )
               |Checkbox A
             label
@@ -119,7 +122,8 @@ block content
                 name = "checkbox[]",
                 value = "Checkbox B", 
                 v-model = "input.checkbox.value",
-                class = "p-vue-form__checkbox"
+                class = "p-vue-form__checkbox",
+                @change = 'validate("checkbox")',
               )
               |Checkbox B
             label
@@ -128,7 +132,8 @@ block content
                 name = "checkbox[]",
                 value = "Checkbox C", 
                 v-model = "input.checkbox.value",
-                class = "p-vue-form__checkbox"
+                class = "p-vue-form__checkbox",
+                @change = 'validate("checkbox")',
               )
               |Checkbox C
           .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
@@ -169,7 +174,8 @@ block content
               cols = "60",
               rows = "8",
               v-model = "input.multiText.value",
-              class = "p-vue-form__textarea"
+              class = "p-vue-form__textarea",
+              @focusout = 'validate("multiText")',
             )
           .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
             |{{ input.multiText.value }}
