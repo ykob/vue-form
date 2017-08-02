@@ -35,6 +35,10 @@ export default function() {
           validation: null,
           error: []
         },
+        file: {
+          validation: null,
+          error: []
+        },
         multiText: {
           default: '',
           value: null,
@@ -88,10 +92,13 @@ export default function() {
         if (!valid && !!input.value) input.error.push('数値を入力してください。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
+      getFile: function(event) {
+        console.log(event.target.files);
+      },
       noValidation: function(input) {
         input.validation = true;
       },
-      validate: function(key) {
+      validate: function(key, event) {
         switch (key) {
           case 'text':
             this.initInput(this.input.text);
@@ -114,11 +121,14 @@ export default function() {
             this.initInput(this.input.select);
             this.matchRequire(this.input.select);
             break;
+          case 'file':
+            const files = event.target.files;
+            this.initInput(this.input.file);
+            break;
           case 'multiText':
             this.initInput(this.input.multiText);
             this.matchRequire(this.input.multiText);
             break;
-
           default:
         }
       },

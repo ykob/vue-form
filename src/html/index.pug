@@ -166,6 +166,20 @@ block content
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
+            |input file
+        .p-vue-form__item-body
+          .p-vue-form__item-inner
+            input(
+              type = "file",
+              name = "file",
+              @change = 'validate("file", event)'
+              )
+          .p-vue-form__error(v-show="input.file.validation == false")
+            span(v-for="item in input.file.error")
+              |{{ item }}
+      .p-vue-form__item
+        .p-vue-form__item-head
+          .p-vue-form__item-inner
             |multi column text
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
