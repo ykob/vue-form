@@ -168,12 +168,15 @@ block content
           .p-vue-form__item-inner
             |input file
         .p-vue-form__item-body
-          .p-vue-form__item-inner
+          .p-vue-form__item-inner(v-show="step == 0")
             input(
               type = "file",
               name = "file",
-              @change = 'validate("file", event)'
+              @change = 'getFile(event, "file")'
               )
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
+            span(v-for="item in input.file.value")
+              |{{ item.name }}
           .p-vue-form__error(v-show="input.file.validation == false")
             span(v-for="item in input.file.error")
               |{{ item }}
