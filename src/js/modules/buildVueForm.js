@@ -92,9 +92,6 @@ export default function() {
         if (!valid && !!input.value) input.error.push('数値を入力してください。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
-      getFile: function(event) {
-        console.log(event.target.files);
-      },
       noValidation: function(input) {
         input.validation = true;
       },
