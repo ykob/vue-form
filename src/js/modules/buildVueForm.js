@@ -94,6 +94,17 @@ export default function() {
         if (!valid && !!input.value) input.error.push('数値を入力してください。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
+      matchFiletype: function(input, regexp) {
+        let valid = true;
+        for (var i = 0; i < input.value.length; i++) {
+          if (!input.value[i].type.match(regexp)) {
+            valid = false;
+            break;
+          }
+        }
+        if (!valid && !!input.value) input.error.push('指定の形式のファイルを選択してください。');
+        if (input.validation === true || input.validation === null) input.validation = valid;
+      },
       getFile: function(event, key) {
         this.input[key].value = event.target.files;
         this.validate(key);
@@ -126,6 +137,7 @@ export default function() {
             break;
           case 'file':
             this.initInput(this.input.file);
+            this.matchFiletype(this.input.file, /(png|jpeg|jpg|gif)/g);
             this.matchRequire(this.input.file);
             break;
           case 'multiText':
