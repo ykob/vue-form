@@ -1,11 +1,13 @@
 <?php
+  mb_internal_encoding("UTF-8");
+
   $file = $_FILES["file"];
 
   // setting pathname for upload directory.
   $dirArray = Array('./upload_files/', date('Y/'), date('md/'), date('His/'));
+  $filepath = implode($dirArray). $file['name'];
 
   // check to be present directory.
-  $dir = '';
   for ($i = 0; $i < count($dirArray); $i++) {
     $dir = '';
     for ($j = 0; $j <= $i; $j++) {
@@ -17,33 +19,39 @@
   }
 
   // upload file.
-  $filepath = $dir. $file['name'];
   move_uploaded_file($file['tmp_name'], $filepath);
 
-  // send mail
-  $boundary = "__BOUNDARY__";
-
-  $additional_headers = "Content-Type: multipart/mixed; boundary=\"{$boundary}\"\n";
-  $additional_headers .= "Content-Transfer-Encoding: 8bit\n";
-  $additional_headers .= "From: info@tplh.net\n";
-
-  $message = "--{$boundary}\n";
-
-  $message .= "Content-Type: text/plain; charset=\"ISO-2022-JP\"\n";
-  $message .= "\n";
-  $message .= "これはメール本文です。\n";
-
-  $message .= "--{$boundary}\n";
-
-  $message .= "Content-Type: text/plain; charset=\"ISO-2022-JP\"\n";
-  $message .= "\n";
-  $message .= "これはメール本文です。2\n";
-
-  $message .= "--{$boundary}\n";
-
+  // send mail.
   $filetype = mime_content_type($filepath);
   $filename = basename($filepath);
 
+  $boundary = "__BOUNDARY__";
+
+  $additional_headers = "Content-Type: multipart/mixed; boundary=\"{$boundary}\"; charset=\"UTF-8\"\n";
+  $additional_headers .= "Content-Transfer-Encoding: 8bit\n";
+  $additional_headers .= "From: info@tplh.net\n";
+
+  $message = "";
+
+  $message .= "--{$boundary}\n";
+  $message .= "Content-Type: multipart/alternative; boundary=\"{$boundary}2\"\n";
+  $message .= "\n";
+
+  $message .= "--{$boundary}2\n";
+  $message .= "Content-Type: text/plain; charset=\"UTF-8\"\n";
+  $message .= "Content-Transfer-Encoding: 8bit\n";
+  $message .= "\n";
+  $message .= "これは Content-Type: text/plain のメール本文です。\n";
+
+  $message .= "--{$boundary}2\n";
+  $message .= "Content-Type: text/html; charset=\"UTF-8\"\n";
+  $message .= "Content-Transfer-Encoding: 8bit\n";
+  $message .= "\n";
+  $message .= "これは Content-Type: text/html のメール本文です。\n";
+
+  $message .= "--{$boundary}2--\n";
+
+  $message .= "--{$boundary}\n";
   $message .= "Content-Type: {$filetype}; name=\"{$filename}\"\n";
   $message .= "Content-Disposition: attachment; filename=\"{$filename}\"\n";
   $message .= "Content-Transfer-Encoding: base64\n";
@@ -52,5 +60,5 @@
 
   $message .= "--{$boundary}--";
 
-  mb_send_mail('koba@tsumikiinc.com', '添付ファイルのテスト送信', $message, $additional_headers);
+  mail('koba@tsumikiinc.com', '添付ファイルのテスト送信', $message, $additional_headers);
 ?>
