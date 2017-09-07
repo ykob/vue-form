@@ -1,9 +1,40 @@
 <?php
+  mb_internal_encoding("UTF-8");
+
+  // Common attributes
+  $boundary = "__BOUNDARY__";
+
+  // Common functions
   function removeCRLF($str) {
     return str_replace(array("\r","\n"), array(" ", " "), $str);
   }
   function removeHtml($str) {
     return strip_tags(trim($str));
+  }
+  function getMailContent($file, $filepath, $boundary, $content_base) {
+    $filetype = mime_content_type($filepath);
+    $filename = basename($filepath);
+    $content = "";
+
+    if (count($file) < 1) {
+      $content .= "--$boundary\n";
+      $content .= "Content-Type: text/plain; charset=\"UTF-8\"\n";
+      $content .= "Content-Transfer-Encoding: 8bit\n";
+      $content .= "\n";
+      $content .= "$content_base\n";
+
+      $content .= "--$boundary\n";
+      $content .= "Content-Type: $filetype; name=\"$filename\"\n";
+      $content .= "Content-Disposition: attachment; filename=\"$filename\"\n";
+      $content .= "Content-Transfer-Encoding: base64\n";
+      $content .= "\n";
+      $content .= chunk_split(base64_encode(file_get_contents($filepath)))."\n";
+
+      $content .= "--$boundary--";
+    } else {
+      $content .= "$content_base\n";
+    }
+    return $content;
   }
 
   // Only process POST reqeusts.
@@ -35,8 +66,50 @@
   }
 
   // ------------------------------------
+  // For attachment files
+  // ------------------------------------
+  $file = $_FILES["file"];
+
+  if (count($file) < 1) {
+    // Check file type.
+    switch ($file['type']) {
+      case 'image/jpeg':
+      case 'image/png':
+      case 'image/gif':
+        break;
+      default:
+        http_response_code(400);
+        echo "400 bad request";
+        exit;
+    }
+
+    // Check to be present directory.
+    $dirArray = Array('./upload_files/', date('Y/'), date('md/'), date('His/'));
+    for ($i = 0; $i < count($dirArray); $i++) {
+      $dir = '';
+      for ($j = 0; $j <= $i; $j++) {
+        $dir .= $dirArray[$j];
+      }
+      if (!is_dir($dir)) {
+        mkdir($dir);
+      }
+    }
+
+    // Upload file.
+    $filepath = implode($dirArray). $file['name'];
+    move_uploaded_file($file['tmp_name'], $filepath);
+  }
+
+  // ------------------------------------
   // For Common
   // ------------------------------------
+  // Set the email headers.
+  $email_headers = "";
+  if (count($file) < 1) {
+    $email_headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"; charset=\"UTF-8\"\n";
+  }
+  $email_headers .= "Content-Transfer-Encoding: base64\n";
+
   // Build the email content.
   $email_content = "";
   $email_content .= "$text\n";
@@ -59,9 +132,12 @@
   // Build the email content.
   $email_content_admin = "ウェブサイトのフォームからお問い合わせがありました。\n内容は以下のとおりです。\n\n";
   $email_content_admin .= $email_content;
+  $email_content_admin = getMailContent($file, $filepath, $boundary, $email_content_admin);
 
   // Build the email headers.
-  $email_headers_admin = "From: $name <$mail>";
+  $email_headers_admin = '';
+  $email_headers_admin .= $email_headers;
+  $email_headers_admin .= "From: $name <$mail>";
 
   // ------------------------------------
   // For User
@@ -77,11 +153,13 @@
   $email_content_user  = "$name 様\n\n";
   $email_content_user .= "この度はお問い合わせいただきましてありがとうございました。\n以下の内容にて承りました。\n\n";
   $email_content_user .= "$email_content\n";
+  $email_content_user = getMailContent($file, $filepath, $boundary, $email_content_user);
 
   // Build the email headers.
-  $email_headers_user = "From: yoichi kobayashi <info@tplh.net>";
+  $email_headers_user = '';
+  $email_headers_user .= $email_headers;
+  $email_headers_user .= "From: yoichi kobayashi <info@tplh.net>";
 
-  // Send the email.
   if (
     mail($recipient_admin, $subject_admin, $email_content_admin, $email_headers_admin) &&
     mail($recipient_user, $subject_user, $email_content_user, $email_headers_user)
