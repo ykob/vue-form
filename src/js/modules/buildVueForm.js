@@ -178,6 +178,7 @@ export default function() {
             const formData = new FormData(this.$el);
             xhr.addEventListener('load', (event) => {
               this.step = 2;
+              console.log(xhr.responseText);
             });
             xhr.addEventListener('error', (event) => {
             });
