@@ -47,7 +47,7 @@
   }
 
   // Get the form fields and remove whitespace.
-  $text = removeCRLF(removeHtml($_POST["text"]));
+  $name = removeCRLF(removeHtml($_POST["name"]));
   $mail = filter_var(trim($_POST["mail"]), FILTER_SANITIZE_EMAIL);
   $radio = removeHtml($_POST["radio"]);
   $checkbox = removeHtml(implode(" / ", $_POST["checkbox"]));
@@ -56,7 +56,7 @@
 
   // Check that data was sent to the mailer.
   if (
-    empty($text) OR
+    empty($name) OR
     empty($multi_text) OR
     !filter_var($mail, FILTER_VALIDATE_EMAIL)
   ) {
@@ -117,12 +117,12 @@
 
   // Build the email content.
   $email_content = "";
-  $email_content .= "$text\n";
-  $email_content .= "$mail\n";
-  $email_content .= "$radio\n";
-  $email_content .= "$checkbox\n";
-  $email_content .= "$select\n";
-  $email_content .= "$multi_text\n";
+  $email_content .= "Name: $name\n";
+  $email_content .= "Email: $mail\n";
+  $email_content .= "Radios: $radio\n";
+  $email_content .= "Checks: $checkbox\n";
+  $email_content .= "Selected: $select\n";
+  $email_content .= "Multi Text: $multi_text\n";
 
   // ------------------------------------
   // For Admin

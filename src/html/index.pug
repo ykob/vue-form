@@ -26,44 +26,44 @@ block content
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
-            |input text
+            |name
             .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
             input(
               type = "text",
-              name = "text",
+              name = "name",
               value = "",
-              placeholder = "input text",
+              placeholder = "input your name",
               class = "p-vue-form__input",
-              v-model = "input.text.value",
-              @focusout = 'validate("text")',
+              v-model = "input.name.value",
+              @focusout = 'validate("name")',
             )
           .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
-            |{{ input.text.value }}
-          .p-vue-form__error.p-vue-form__error--next-input(v-show="input.text.validation == false")
-            span(v-for="item in input.text.error")
+            |{{ input.name.value }}
+          .p-vue-form__error.p-vue-form__error--next-input(v-show="input.name.validation == false")
+            span(v-for="item in input.name.error")
               |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
-            |input mail
+            |email
             .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
             input(
-              type = "mail",
-              name = "mail",
+              type = "email",
+              name = "email",
               value = "",
-              placeholder = "input mail",
+              placeholder = "input your email",
               class = "p-vue-form__input",
-              v-model = "input.mail.value",
-              @focusout = 'validate("mail")',
+              v-model = "input.email.value",
+              @focusout = 'validate("email")',
             )
           .p-vue-form__item-inner.p-vue-form__confirm(v-show="step == 1")
-            |{{ input.mail.value }}
-          .p-vue-form__error.p-vue-form__error--next-input(v-show="input.mail.validation == false")
-            span(v-for="item in input.mail.error")
+            |{{ input.email.value }}
+          .p-vue-form__error.p-vue-form__error--next-input(v-show="input.email.validation == false")
+            span(v-for="item in input.email.error")
               |{{ item }}
       .p-vue-form__item
         .p-vue-form__item-head
@@ -172,9 +172,10 @@ block content
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
-            |input file
+            |attachment file
             br
-            |(only jpeg/png/gif)
+            small
+              |only jpeg/png/gif
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
             input(

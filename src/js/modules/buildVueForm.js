@@ -5,13 +5,13 @@ export default function() {
     el: '#vue-form',
     data: {
       input: {
-        text: {
+        name: {
           default: '',
           value: null,
           validation: null,
           error: []
         },
-        mail: {
+        email: {
           default: '',
           value: null,
           validation: null,
@@ -115,14 +115,14 @@ export default function() {
       },
       validate: function(key, event) {
         switch (key) {
-          case 'text':
-            this.initInput(this.input.text);
-            this.matchRequire(this.input.text);
+          case 'name':
+            this.initInput(this.input.name);
+            this.matchRequire(this.input.name);
             break;
-          case 'mail':
-            this.initInput(this.input.mail);
-            this.matchRequire(this.input.mail);
-            this.matchMail(this.input.mail);
+          case 'email':
+            this.initInput(this.input.email);
+            this.matchRequire(this.input.email);
+            this.matchMail(this.input.email);
             break;
           case 'radio':
             this.initInput(this.input.radio);
