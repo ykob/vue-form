@@ -139,7 +139,6 @@ export default function() {
           case 'file':
             this.initInput(this.input.file);
             this.matchFiletype(this.input.file, /(png|jpeg|jpg|gif)/g);
-            this.matchRequire(this.input.file);
             break;
           case 'multiText':
             this.initInput(this.input.multiText);
