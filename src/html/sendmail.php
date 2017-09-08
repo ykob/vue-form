@@ -11,12 +11,13 @@
   function removeHtml($str) {
     return strip_tags(trim($str));
   }
-  function getMailContent($file, $filepath, $boundary, $content_base) {
-    $filetype = mime_content_type($filepath);
-    $filename = basename($filepath);
+  function getMailContent($content_base, $boundary, $filepath) {
     $content = "";
 
-    if (count($file) < 1) {
+    if ($filepath) {
+      $filetype = mime_content_type($filepath);
+      $filename = basename($filepath);
+
       $content .= "--$boundary\n";
       $content .= "Content-Type: text/plain; charset=\"UTF-8\"\n";
       $content .= "Content-Transfer-Encoding: 8bit\n";
@@ -69,8 +70,9 @@
   // For attachment files
   // ------------------------------------
   $file = $_FILES["file"];
+  $filepath = null;
 
-  if (count($file) < 1) {
+  if ($file['name']) {
     // Check file type.
     switch ($file['type']) {
       case 'image/jpeg':
@@ -105,10 +107,13 @@
   // ------------------------------------
   // Set the email headers.
   $email_headers = "";
-  if (count($file) < 1) {
+  if ($filepath) {
     $email_headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"; charset=\"UTF-8\"\n";
+    $email_headers .= "Content-Transfer-Encoding: base64\n";
+  } else {
+    $email_headers .= "Content-Type: text/plain; charset=\"UTF-8\"\n";
+    $email_headers .= "Content-Transfer-Encoding: 8bit\n";
   }
-  $email_headers .= "Content-Transfer-Encoding: base64\n";
 
   // Build the email content.
   $email_content = "";
@@ -132,7 +137,7 @@
   // Build the email content.
   $email_content_admin = "ウェブサイトのフォームからお問い合わせがありました。\n内容は以下のとおりです。\n\n";
   $email_content_admin .= $email_content;
-  $email_content_admin = getMailContent($file, $filepath, $boundary, $email_content_admin);
+  $email_content_admin = getMailContent($email_content_admin, $boundary, $filepath);
 
   // Build the email headers.
   $email_headers_admin = '';
@@ -153,7 +158,7 @@
   $email_content_user  = "$name 様\n\n";
   $email_content_user .= "この度はお問い合わせいただきましてありがとうございました。\n以下の内容にて承りました。\n\n";
   $email_content_user .= "$email_content\n";
-  $email_content_user = getMailContent($file, $filepath, $boundary, $email_content_user);
+  $email_content_user = getMailContent($email_content_user, $boundary, $filepath);
 
   // Build the email headers.
   $email_headers_user = '';
