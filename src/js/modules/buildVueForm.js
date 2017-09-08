@@ -64,6 +64,7 @@ export default function() {
     },
     methods: {
       initForm: function() {
+        this.$el.reset();
         for (var key in this.input) {
           this.input[key].value = this.input[key].default;
           this.input[key].validation = null;
