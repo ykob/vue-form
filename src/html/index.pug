@@ -27,6 +27,7 @@ block content
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |input text
+            .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
             input(
@@ -47,6 +48,7 @@ block content
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |input mail
+            .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
             input(
@@ -67,6 +69,7 @@ block content
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |radio button
+            .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner.p-vue-form__label-wrap(v-show="step == 0")
             label
@@ -105,6 +108,7 @@ block content
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |checkbox
+            .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner.p-vue-form__label-wrap(v-show="step == 0")
             label
@@ -147,6 +151,7 @@ block content
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |select
+            .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
             select(
@@ -185,6 +190,7 @@ block content
         .p-vue-form__item-head
           .p-vue-form__item-inner
             |multi column text
+            .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show="step == 0")
             textarea(
