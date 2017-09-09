@@ -20,7 +20,7 @@
 
   // Get the form fields and remove whitespace.
   $name = removeCRLF(removeHtml($_POST["name"]));
-  $mail = filter_var(trim($_POST["mail"]), FILTER_SANITIZE_EMAIL);
+  $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
   $radio = removeHtml($_POST["radio"]);
   $checkbox = removeHtml(implode(" / ", $_POST["checkbox"]));
   $select = removeHtml(implode(" / ", $_POST["select"]));
@@ -30,7 +30,7 @@
   if (
     empty($name) OR
     empty($multi_text) OR
-    !filter_var($mail, FILTER_VALIDATE_EMAIL)
+    !filter_var($email, FILTER_VALIDATE_EMAIL)
   ) {
     // Set a 400 (bad request) response code and exit.
     http_response_code(400);
@@ -90,7 +90,7 @@
   // Build the email content.
   $email_content = "";
   $email_content .= "Name: $name\n";
-  $email_content .= "Email: $mail\n";
+  $email_content .= "Email: $email\n";
   $email_content .= "Radios: $radio\n";
   $email_content .= "Checks: $checkbox\n";
   $email_content .= "Selected: $select\n";
@@ -114,17 +114,17 @@
   // Build the email headers.
   $email_headers_admin = '';
   $email_headers_admin .= $email_headers;
-  $email_headers_admin .= "From: $name <$mail>";
+  $email_headers_admin .= "From: $name <$email>";
 
   // ------------------------------------
   // For User
   // ------------------------------------
   // Set the recipient email address.
   // FIXME: Update this to your desired email address.
-  $recipient_user = $mail;
+  $recipient_user = $email;
 
   // Set the email subject.
-  $subject_user = "お問い合わせありがとうございました。";
+  $subject_user = "$name 様 お問い合わせありがとうございました。";
 
   // Build the email content.
   $email_content_user  = "$name 様\n\n";
