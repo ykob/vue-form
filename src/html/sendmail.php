@@ -38,6 +38,9 @@
     return $content;
   }
 
+  // ------------------------------------
+  // Start
+  // ------------------------------------
   // Only process POST reqeusts.
   if ($_SERVER["REQUEST_METHOD"] != "POST") {
     // Not a POST request, set a 403 (forbidden) response code.
@@ -67,7 +70,7 @@
   }
 
   // ------------------------------------
-  // For attachment files
+  // Upload attachment files
   // ------------------------------------
   $file = $_FILES["file"];
   $filepath = null;
@@ -103,7 +106,7 @@
   }
 
   // ------------------------------------
-  // For Common
+  // Start setting email headers and contents.
   // ------------------------------------
   // Set the email headers.
   $email_headers = "";
@@ -165,6 +168,9 @@
   $email_headers_user .= $email_headers;
   $email_headers_user .= "From: yoichi kobayashi <info@tplh.net>";
 
+  // ------------------------------------
+  // Send Mail
+  // ------------------------------------
   if (
     mail($recipient_admin, $subject_admin, $email_content_admin, $email_headers_admin) &&
     mail($recipient_user, $subject_user, $email_content_user, $email_headers_user)
