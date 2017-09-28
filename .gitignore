@@ -9,3 +9,4 @@ dst/**/*.html
 dst/img/common/sprite.png
 build/**/*
 .sass-cache
+.vagrant
