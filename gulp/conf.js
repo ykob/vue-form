@@ -7,6 +7,7 @@ const DIR = module.exports.DIR =  {
   DEST: 'dst',
   BUILD: 'build'
 };
+const PROXY = '192.168.33.10';
 
 module.exports.serve = {
   dest: {
@@ -14,26 +15,14 @@ module.exports.serve = {
     notify: false,
     startPath: DIR.PATH,
     ghostMode: false,
-    server: {
-      baseDir: DIR.DEST,
-      index: 'index.html',
-      routes: {
-        [DIR.PATH]: `${DIR.DEST}${DIR.PATH}/`
-      }
-    }
+    proxy: PROXY
   },
   build: {
     //tunnel: 'test',
     notify: false,
     startPath: DIR.PATH,
     ghostMode: false,
-    server: {
-      baseDir: DIR.BUILD,
-      index: 'index.html',
-      routes: {
-        [DIR.PATH]: `${DIR.BUILD}${DIR.PATH}/`
-      }
-    }
+    proxy: PROXY
   }
 };
 
