@@ -95,6 +95,13 @@ export default function() {
         if (!valid && !!input.value) input.error.push('数値を入力してください。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
+      matchMaxLength: function(input, maxLength) {
+        const valid = (input.value.length <= maxLength);
+        if (!valid) {
+          input.error.push(maxLength + '文字以内でご記入ください。');
+        }
+        if (input.validation === true || input.validation === null) input.validation = valid;
+      },
       matchFiletype: function(input, regexp) {
         let valid = true;
         for (var i = 0; i < input.value.length; i++) {
