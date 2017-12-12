@@ -1,14 +1,10 @@
-import initCommon from './init/common.js'
-import initIndex from './init/index.js'
-
-const { pathname } = window.location;
+const pageId = document.querySelector('.l-page').getAttribute('data-page-id');
 
 const init = () => {
-  initCommon();
-  switch (pathname.replace('index.html', '')) {
-    case '/':
-      initIndex();
-      break;
+  require ('./init/common.js').default();
+  switch (pageId) {
+    case 'index': require ('./init/index.js').default(); break;
+    case 'syncIndex': require ('./init/sync/index.js').default(); break;
     default:
   }
 }

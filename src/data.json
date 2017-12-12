@@ -6,12 +6,22 @@
   },
   "pages": {
     "index": {
+      "id": "index",
       "title": "",
       "keywords": "",
       "description": "it is mail form template made with vue.js",
       "path": "/",
-      "ogp_description": "it is mail form template made with vue.js",
       "ogp_img": "ogp.jpg"
+    },
+    "sync": {
+      "index": {
+        "id": "syncIndex",
+        "title": "",
+        "keywords": "",
+        "description": "it is mail form template made with vue.js",
+        "path": "/",
+        "ogp_img": "ogp.jpg"
+      }
     }
   }
 }

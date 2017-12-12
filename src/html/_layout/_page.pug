@@ -8,7 +8,7 @@ html(lang="ja")
   head
     include ../_modules/_head.pug
   body
-    .l-page
+    .l-page(data-page-id=page.id)
       include ../_modules/_l-gh.pug
       block content
       include ../_modules/_l-gf.pug
