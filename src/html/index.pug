@@ -157,6 +157,7 @@ block content
             select(
               name = 'select[]'
               v-model = 'input.select.value'
+              @change = 'validate("select")'
             )
               option(value = 'Select A')
                 |Select A
