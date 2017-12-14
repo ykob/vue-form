@@ -76,7 +76,7 @@ export default function() {
         input.error = [];
       },
       matchRequire: function(input) {
-        const valid = (input.value.length > 0);
+        const valid = (String(input.value).length > 0);
         if (!valid) input.error.push('この項目は記入必須です。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
