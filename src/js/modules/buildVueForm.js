@@ -49,6 +49,7 @@ export default function() {
         },
       },
       step: 0,
+      isProcessing: false,
     },
     mounted: function() {
       this.initForm();
@@ -172,6 +173,7 @@ export default function() {
       },
       submit: function(event) {
         event.preventDefault();
+        if (this.isProcessing === true) return;
         switch (this.step) {
           case 0:
             this.validateAll();
@@ -185,10 +187,13 @@ export default function() {
             const formData = new FormData(this.$el);
             xhr.addEventListener('load', (event) => {
               this.step = 2;
+              this.isProcessing = false;
               console.log(xhr.responseText);
             });
             xhr.addEventListener('error', (event) => {
+              this.isProcessing = false;
             });
+            this.isProcessing = true;
             xhr.open('POST', '/sendmail.php');
             xhr.send(formData);
             break;
