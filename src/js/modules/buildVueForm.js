@@ -50,9 +50,38 @@ export default function() {
       },
       step: 0,
       isProcessing: false,
+      xhr: new XMLHttpRequest(),
     },
     mounted: function() {
       this.initForm();
+
+      this.xhr.onreadystatechange = () => {
+        switch (this.xhr.readyState) {
+          case 0: // UNSENT
+            break;
+          case 1: // OPENED
+            this.isProcessing = true;
+            break;
+          case 2: // HEADERS_RECEIVED
+            break;
+          case 3: // LOADING
+            break;
+          case 4: // DONE
+            switch (this.xhr.status) {
+              case 200:
+                this.step = 2;
+                break;
+              case 404:
+                console.error('Async request by Pjax has error, 404 not found.');
+                break;
+              case 500:
+                console.error('Async request by Pjax has error, 500 Internal Server Error.');
+                break;
+            }
+            this.isProcessing = false;
+          default:
+        }
+      }
     },
     computed: {
       isValid: function() {
@@ -177,25 +206,13 @@ export default function() {
         switch (this.step) {
           case 0:
             this.validateAll();
-            if (this.isValid) {
-              this.step = 1;
-            }
+            if (this.isValid) this.step = 1;
             this.scroll();
             break;
           case 1:
-            const xhr = new XMLHttpRequest();
             const formData = new FormData(this.$el);
-            xhr.addEventListener('load', (event) => {
-              this.step = 2;
-              this.isProcessing = false;
-              console.log(xhr.responseText);
-            });
-            xhr.addEventListener('error', (event) => {
-              this.isProcessing = false;
-            });
-            this.isProcessing = true;
-            xhr.open('POST', '/sendmail.php');
-            xhr.send(formData);
+            this.xhr.open('POST', '/sendmail.php');
+            this.xhr.send(formData);
             break;
           default:
         }

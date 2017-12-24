@@ -241,3 +241,6 @@ block content
           class = 'p-vue-form__button p-vue-form__button--submit'
           @click = 'reset'
         )
+
+    .p-vue-form__processing(v-show = 'isProcessing === true')
+      .p-vue-form__processing__icon
