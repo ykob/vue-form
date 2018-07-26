@@ -184,6 +184,7 @@ export default function() {
           case 1:
             const formData = new FormData(this.$el);
             axios.post('/sendmail.php', formData)
+            this.isProcessing = true;
               .then((response) => {
                 // succeed to post.
                 this.step = 2;
