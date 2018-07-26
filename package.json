@@ -50,6 +50,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "js-util": "git://github.com/ykob/js-util.git",
     "jstransformer-markdown-it": "^2.0.0",
     "vue": "^2.4.4"
