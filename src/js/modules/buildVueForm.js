@@ -1,4 +1,5 @@
-import Vue from 'vue/dist/vue.min';
+const Vue = require('vue/dist/vue.min');
+const axios = require('axios');
 
 export default function() {
   return new Vue({
@@ -50,38 +51,9 @@ export default function() {
       },
       step: 0,
       isProcessing: false,
-      xhr: new XMLHttpRequest(),
     },
     mounted: function() {
       this.initForm();
-
-      this.xhr.onreadystatechange = () => {
-        switch (this.xhr.readyState) {
-          case 0: // UNSENT
-            break;
-          case 1: // OPENED
-            this.isProcessing = true;
-            break;
-          case 2: // HEADERS_RECEIVED
-            break;
-          case 3: // LOADING
-            break;
-          case 4: // DONE
-            switch (this.xhr.status) {
-              case 200:
-                this.step = 2;
-                break;
-              case 404:
-                console.error('Async request by Pjax has error, 404 not found.');
-                break;
-              case 500:
-                console.error('Async request by Pjax has error, 500 Internal Server Error.');
-                break;
-            }
-            this.isProcessing = false;
-          default:
-        }
-      }
     },
     computed: {
       isValid: function() {
@@ -211,8 +183,27 @@ export default function() {
             break;
           case 1:
             const formData = new FormData(this.$el);
-            this.xhr.open('POST', '/sendmail.php');
-            this.xhr.send(formData);
+            axios.post('/sendmail.php', formData)
+              .then((response) => {
+                // succeed to post.
+                this.step = 2;
+              })
+              .catch((error) => {
+                // failed to post.
+                switch (error.status) {
+                  case 404:
+                    console.error('A post by axios had an error that is "404 not found".');
+                    break;
+                  case 500:
+                    console.error('A post by axios had an error that is "500 Internal Server Error."');
+                    break;
+                }
+                this.step = 3;
+              })
+              .then(() => {
+                // always executed.
+                this.isProcessing = false;
+              });
             break;
           default:
         }
