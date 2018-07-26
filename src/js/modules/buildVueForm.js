@@ -182,9 +182,8 @@ export default function() {
             this.scroll();
             break;
           case 1:
-            const formData = new FormData(this.$el);
-            axios.post('/sendmail.php', formData)
             this.isProcessing = true;
+            axios.post('/sendmail.php', new FormData(this.$el))
               .then((response) => {
                 // succeed to post.
                 this.step = 2;
