@@ -191,14 +191,7 @@ export default function() {
               })
               .catch((error) => {
                 // failed to post.
-                switch (error.status) {
-                  case 404:
-                    console.error('A post by axios had an error that is "404 not found".');
-                    break;
-                  case 500:
-                    console.error('A post by axios had an error that is "500 Internal Server Error."');
-                    break;
-                }
+                console.error(`A post by axios had an error : ${error.response.status} ${error.response.statusText}`);
                 this.step = 3;
               })
               .then(() => {
