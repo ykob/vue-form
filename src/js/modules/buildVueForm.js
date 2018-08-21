@@ -83,23 +83,23 @@ export default function() {
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
       matchTel: function(input) {
-        const valid = !!String(input.value).match(/^[0-9０-９\-\ー]+$/);
-        if (!valid && !!input.value) input.error.push('電話番号を入力してください。');
+        const valid = (String(input.value).length === 0) || !!String(input.value).match(/^[0-9０-９\-\ー]+$/);
+        if (!valid) input.error.push('電話番号を入力してください。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
       matchMail: function(input) {
-        const valid = !!String(input.value).match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-        if (!valid && !!input.value) input.error.push('メールアドレスを入力してください。');
+        const valid = (String(input.value).length === 0) || !!String(input.value).match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+        if (!valid) input.error.push('メールアドレスを入力してください。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
       matchNumber: function(input) {
-        const valid = !!String(input.value).match(/^[0-9０-９]+$/);
-        if (!valid && !!input.value) input.error.push('数値を入力してください。');
+        const valid = (String(input.value).length === 0) || !!String(input.value).match(/^[0-9０-９]+$/);
+        if (!valid) input.error.push('数値を入力してください。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
       matchURL: function(input) {
-        const valid = !!String(input.value).match(/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/);
-        if (!valid && !!input.value) input.error.push('URLを入力してください。');
+        const valid = (String(input.value).length === 0) || !!String(input.value).match(/^(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/);
+        if (!valid) input.error.push('URLを入力してください。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
       matchMaxLength: function(input, maxLength) {
