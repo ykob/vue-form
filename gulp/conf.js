@@ -1,8 +1,11 @@
 // 設定ファイル
 // 対象パスやオプションを指定
 
+const DOMAIN = module.exports.DOMAIN = 'http://www.xxx.com';
 const DIR = module.exports.DIR =  {
+   // 語尾にスラッシュはつけない
   PATH: '',
+  CMS: '/cms/wp-content/themes/xxx.com',
   SRC: 'src',
   DEST: 'dst',
   BUILD: 'build'
@@ -10,9 +13,8 @@ const DIR = module.exports.DIR =  {
 
 module.exports.serve = {
   dest: {
-    //tunnel: 'test',
     notify: false,
-    startPath: DIR.PATH,
+    startPath: `${DIR.PATH}/`,
     ghostMode: false,
     server: {
       baseDir: DIR.DEST,
@@ -23,7 +25,6 @@ module.exports.serve = {
     }
   },
   build: {
-    //tunnel: 'test',
     notify: false,
     startPath: DIR.PATH,
     ghostMode: false,
@@ -38,21 +39,41 @@ module.exports.serve = {
 };
 
 module.exports.scripts = {
-  common: '',
-  entryFiles: [
-    `./${DIR.SRC}/js/main.js`,
+  src: [
+    `./${DIR.SRC}/**/*.js`,
   ],
-  browserifyOpts: {
-    transform: [
-      ['babelify', {
-        babelrc: false,
-        presets: ['es2015']
-      }],
-      'vueify',
-      'envify'
-    ]
+  dest: {
+    development: `./${DIR.DEST}/js/`,
+    production: `./${DIR.BUILD}/js/`,
   },
-  dest: `${DIR.DEST}${DIR.PATH}/js`
+  webpack: {
+    entry: `./${DIR.SRC}/js/main.js`,
+    output: {
+      filename: `main.js`
+    },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env']
+            }
+          },
+        }
+      ]
+    }
+  },
+};
+
+module.exports.vendorScripts = {
+  src: [
+    `./${DIR.SRC}/js/vendor/*.js`,
+  ],
+  concat: 'vendor.js',
+  dest: `./${DIR.DEST}${DIR.PATH}/js/`
 };
 
 module.exports.pug = {
@@ -62,10 +83,12 @@ module.exports.pug = {
     `!${DIR.SRC}/**/_*.pug`
   ],
   dest: `${DIR.DEST}${DIR.PATH}`,
-  json: `${DIR.SRC}/data.json`,
   opts: {
     pretty: true
-  }
+  },
+  json: `${DIR.SRC}/data.json`,
+  domain: `${DOMAIN}`,
+  path: `${DIR.PATH}`,
 };
 
 module.exports.sass = {
@@ -77,9 +100,9 @@ module.exports.sass = {
   dest: `${DIR.DEST}${DIR.PATH}/css`,
   browsers: [
     'last 2 versions',
-    'ie >= 9',
-    'Android >= 4',
-    'ios_saf >= 8',
+    'ie >= 11',
+    'Android >= 5',
+    'ios_saf >= 10',
   ]
 };
 
@@ -89,42 +112,15 @@ module.exports.replace = {
       `${DIR.DEST}${DIR.PATH}/**/*.html`
     ],
     dest: `${DIR.BUILD}${DIR.PATH}`,
-    path: `${DIR.PATH}`
-  }
-};
-
-module.exports.sprite = {
-  src: [
-    `${DIR.SRC}/img/sprite/**/*.png`
-  ],
-  dest: {
-    img: `${DIR.DEST}${DIR.PATH}/img/common`,
-    css: `${DIR.SRC}/css/foundation`
-  },
-  opts: {
-    imgName: 'sprite.png',
-    cssName: '_sprite.scss',
-    imgPath: '../img/common/sprite.png',
-    padding: 10,
-    cssOpts: {
-      functions: false
-    }
   }
 };
 
 module.exports.cleanCss = {
   src: `${DIR.DEST}${DIR.PATH}/css/main.css`,
-  dest: `${DIR.BUILD}${DIR.PATH}/css`
-};
-
-module.exports.uglify = {
-  src: [
-    `./${DIR.DEST}${DIR.PATH}/js/vendor.js`,
-    `./${DIR.DEST}${DIR.PATH}/js/main.js`,
-  ],
-  dest: `${DIR.BUILD}${DIR.PATH}/js`,
-  opts: {
-  }
+  dest: {
+    static: `${DIR.BUILD}${DIR.PATH}/css`,
+    cms: `${DIR.BUILD}${DIR.PATH}${DIR.CMS}`,
+  },
 };
 
 module.exports.copy = {
@@ -132,6 +128,7 @@ module.exports.copy = {
     src: [
       `${DIR.SRC}/img/**/*.*`,
       `${DIR.SRC}/font/**/*.*`,
+      `${DIR.SRC}/json/**/*.*`,
     ],
     dest: `${DIR.DEST}${DIR.PATH}`,
     opts: {
@@ -141,40 +138,96 @@ module.exports.copy = {
   build: {
     src: [
       `${DIR.DEST}${DIR.PATH}/img/**/*.ico`,
+      `${DIR.DEST}${DIR.PATH}/img/**/no_compress/*.*`,
       `${DIR.DEST}${DIR.PATH}/font/**/*.*`,
+      `${DIR.DEST}${DIR.PATH}/json/**/*.*`,
     ],
-    dest: `${DIR.BUILD}${DIR.PATH}`,
+    dest: {
+      static: `${DIR.BUILD}${DIR.PATH}`,
+      cms: `${DIR.BUILD}${DIR.PATH}${DIR.CMS}/assets`,
+    },
     opts: {
-      base: `${DIR.DEST}${DIR.PATH}`
+      base: `${DIR.DEST}`
     }
   },
   php: {
     src: [
       `${DIR.SRC}/html/**/*.php`,
     ],
-    dest: `${DIR.BUILD}${DIR.PATH}`,
+    dest: {
+      static: `${DIR.BUILD}${DIR.PATH}`,
+      cms: `${DIR.BUILD}${DIR.PATH}${DIR.CMS}/assets/php`,
+    },
     opts: {
       base: `${DIR.SRC}/html/`
+    }
+  },
+  cms: {
+    src: [
+      `${DIR.SRC}/wp-theme/**/*.php`,
+      `${DIR.SRC}/wp-theme/**/screenshot.png`,
+    ],
+    dest: `${DIR.BUILD}${DIR.PATH}${DIR.CMS}`,
+    opts: {
+      base: `${DIR.SRC}/wp-theme/`
     }
   }
 };
 
 module.exports.imagemin = {
   src: [
-    `${DIR.DEST}${DIR.PATH}/**/*.{jpg,jpeg,png,gif,svg}`
+    `${DIR.DEST}${DIR.PATH}/**/*.{jpg,jpeg,png,gif,svg}`,
+    `!${DIR.DEST}${DIR.PATH}/img/**/no_compress/*.*`,
   ],
-  dest: `${DIR.BUILD}${DIR.PATH}/img`
+  dest: {
+    static: `${DIR.BUILD}${DIR.PATH}/img`,
+    cms: `${DIR.BUILD}${DIR.PATH}${DIR.CMS}/assets/img`,
+  },
+  opts: {
+    pngquant: {
+      quality: 80,
+      speed: 1,
+    },
+    mozjpeg: {
+      quality: 80,
+      progressive: true,
+    },
+    svgo: {
+      plugins: [
+        { removeViewBox: false },
+        { cleanupIDs: true },
+      ]
+    },
+  }
 };
 
 module.exports.clean = {
   dest: {
-    path: [
-      `${DIR.DEST}${DIR.PATH}/**/*.html`,
-      `${DIR.DEST}${DIR.PATH}/css/`,
-      `${DIR.DEST}${DIR.PATH}/js/`
-    ]
+    path: [`${DIR.DEST}`]
   },
   build: {
-    path: [`${DIR.BUILD}${DIR.PATH}`]
+    path: [`${DIR.BUILD}`]
   }
+};
+
+module.exports.sitemap = {
+  src: [
+    `${DIR.BUILD}${DIR.PATH}/**/*.html`,
+    `!${DIR.BUILD}${DIR.PATH}/404/*.html`,
+  ],
+  opts: {
+    siteUrl: DOMAIN,
+    fileName: 'sitemap-static.xml',
+    mappings: [
+      {
+        pages: [`index.html`],
+        priority: 1.0,
+      },
+      {
+        pages: [`**/*.html`],
+        priority: 0.1,
+      }
+    ]
+  },
+  dest: `${DIR.BUILD}${DIR.PATH}/`
 };
