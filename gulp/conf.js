@@ -38,6 +38,7 @@ module.exports.serve = {
   }
 };
 
+const { VueLoaderPlugin } = require('vue-loader');
 module.exports.scripts = {
   src: [
     `./${DIR.SRC}/**/*.js`,
@@ -68,7 +69,10 @@ module.exports.scripts = {
           loader: 'vue-loader'
         }
       ]
-    }
+    },
+    plugins: [
+      new VueLoaderPlugin()
+    ],
   },
 };
 
