@@ -1,56 +1,61 @@
-const Vue = require('vue/dist/vue.min');
-const axios = require('axios');
+<template lang="pug">
+  #form
+</template>
 
-export default function() {
-  return new Vue({
-    el: '#vue-form',
-    data: {
-      input: {
-        name: {
-          default: '',
-          value: null,
-          validation: null,
-          error: []
+<script>
+  import axios from 'axios';
+
+  export default {
+    name: 'Form',
+    data: function() {
+      return {
+        input: {
+          name: {
+            default: '',
+            value: null,
+            validation: null,
+            error: []
+          },
+          email: {
+            default: '',
+            value: null,
+            validation: null,
+            error: []
+          },
+          radio: {
+            default: 'Radio A',
+            value: null,
+            validation: null,
+            error: []
+          },
+          checkbox: {
+            default: [],
+            value: null,
+            validation: null,
+            error: []
+          },
+          select: {
+            default: 'Select A',
+            value: null,
+            validation: null,
+            error: []
+          },
+          file: {
+            default: [],
+            value: null,
+            validation: null,
+            error: []
+          },
+          multiText: {
+            default: '',
+            value: null,
+            validation: null,
+            error: []
+          },
         },
-        email: {
-          default: '',
-          value: null,
-          validation: null,
-          error: []
-        },
-        radio: {
-          default: 'Radio A',
-          value: null,
-          validation: null,
-          error: []
-        },
-        checkbox: {
-          default: [],
-          value: null,
-          validation: null,
-          error: []
-        },
-        select: {
-          default: 'Select A',
-          value: null,
-          validation: null,
-          error: []
-        },
-        file: {
-          default: [],
-          value: null,
-          validation: null,
-          error: []
-        },
-        multiText: {
-          default: '',
-          value: null,
-          validation: null,
-          error: []
-        },
-      },
-      step: 0,
-      isProcessing: false,
+        step: 0,
+        isProcessing: false,
+      }
     },
     mounted: function() {
       this.initForm();
@@ -209,5 +214,8 @@ export default function() {
       scroll: function() {
       }
     }
-  })
-}
+  };
+</script>
+
+<style lang="scss">
+</style>

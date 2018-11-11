@@ -1,5 +1,9 @@
-import buildVueForm from '../modules/buildVueForm.js';
+import Vue from 'vue';
+import Form from '../modules/Form.vue';
 
 export default function() {
-  const form = buildVueForm();
+  new Vue({
+    el: '#vue-form',
+    components: { Form },
+  });
 };
