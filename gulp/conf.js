@@ -55,6 +55,14 @@ module.exports.scripts = {
     module: {
       rules: [
         {
+          test: /\.vue$/,
+          loader: 'vue-loader'
+        },
+        {
+          test: /\.pug$/,
+          loader: 'pug-plain-loader'
+        },
+        {
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
@@ -63,10 +71,6 @@ module.exports.scripts = {
               presets: ['@babel/preset-env']
             }
           },
-        },
-        {
-          test: /\.vue$/,
-          loader: 'vue-loader'
         }
       ]
     },
