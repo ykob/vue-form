@@ -1,5 +1,242 @@
 <template lang="pug">
-  #form
+  form(
+    class = 'p-vue-form'
+    enctype = 'multipart/form-data'
+    @submit = 'submit'
+  )
+    h1.p-vue-form__head
+      |vue-form
+
+    .p-vue-form__step
+      .p-vue-form__step-item(:class='{ "is-current" : step == 0 }')
+        |Step1 : Input
+      .p-vue-form__step-item(:class='{ "is-current" : step == 1 }')
+        |Step2 : Confirm
+      .p-vue-form__step-item(:class='{ "is-current" : step == 2 }')
+        |Step3 : Finish
+
+    .p-vue-form__contents(v-show = 'step < 2')
+      .p-vue-form__item
+        .p-vue-form__item-head
+          .p-vue-form__item-inner
+            |name
+            .c-require *
+        .p-vue-form__item-body
+          .p-vue-form__item-inner(v-show = 'step == 0')
+            input(
+              type = 'text'
+              name = 'name'
+              value = ''
+              placeholder = 'input your name'
+              class = 'p-vue-form__input'
+              v-model = 'input.name.value'
+              @focusout = 'validate("name")'
+            )
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
+            |{{ input.name.value }}
+          .p-vue-form__error.p-vue-form__error--next-input(v-show = 'input.name.validation == false')
+            span(v-for = 'item in input.name.error')
+              |{{ item }}
+      .p-vue-form__item
+        .p-vue-form__item-head
+          .p-vue-form__item-inner
+            |email
+            .c-require *
+        .p-vue-form__item-body
+          .p-vue-form__item-inner(v-show = 'step == 0')
+            input(
+              type = 'email'
+              name = 'email'
+              value = ''
+              placeholder = 'input your email'
+              class = 'p-vue-form__input'
+              v-model = 'input.email.value'
+              @focusout = 'validate("email")'
+            )
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
+            |{{ input.email.value }}
+          .p-vue-form__error.p-vue-form__error--next-input(v-show = 'input.email.validation == false')
+            span(v-for = 'item in input.email.error')
+              |{{ item }}
+      .p-vue-form__item
+        .p-vue-form__item-head
+          .p-vue-form__item-inner
+            |radio button
+            .c-require *
+        .p-vue-form__item-body
+          .p-vue-form__item-inner.p-vue-form__label-wrap(v-show = 'step == 0')
+            label
+              input(
+                type = 'radio'
+                name = 'radio'
+                value = 'Radio A'
+                v-model = 'input.radio.value'
+                class = 'p-vue-form__radio'
+              )
+              |Radio A
+            label
+              input(
+                type = 'radio'
+                name = 'radio'
+                value = 'Radio B'
+                v-model = 'input.radio.value'
+                class = 'p-vue-form__radio'
+              )
+              |Radio B
+            label
+              input(
+                type = 'radio'
+                name = 'radio'
+                value = 'Radio C'
+                v-model = 'input.radio.value'
+                class = 'p-vue-form__radio'
+              )
+              |Radio C
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
+            |{{ input.radio.value }}
+          .p-vue-form__error(v-show = 'input.radio.validation == false')
+            span(v-for = 'item in input.radio.error')
+              |{{ item }}
+      .p-vue-form__item
+        .p-vue-form__item-head
+          .p-vue-form__item-inner
+            |checkbox
+            .c-require *
+        .p-vue-form__item-body
+          .p-vue-form__item-inner.p-vue-form__label-wrap(v-show = 'step == 0')
+            label
+              input(
+                type = 'checkbox'
+                name = 'checkbox[]'
+                value = 'Checkbox A'
+                v-model = 'input.checkbox.value'
+                class = 'p-vue-form__checkbox'
+                @change = 'validate("checkbox")'
+              )
+              |Checkbox A
+            label
+              input(
+                type = 'checkbox'
+                name = 'checkbox[]'
+                value = 'Checkbox B'
+                v-model = 'input.checkbox.value'
+                class = 'p-vue-form__checkbox'
+                @change = 'validate("checkbox")'
+              )
+              |Checkbox B
+            label
+              input(
+                type = 'checkbox'
+                name = 'checkbox[]'
+                value = 'Checkbox C'
+                v-model = 'input.checkbox.value'
+                class = 'p-vue-form__checkbox'
+                @change = 'validate("checkbox")'
+              )
+              |Checkbox C
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
+            span.p-vue-form__confirm-item(v-for = '(item, index) in input.checkbox.value')
+              |{{ item }}
+          .p-vue-form__error(v-show = 'input.checkbox.validation == false')
+            span(v-for = 'item in input.checkbox.error')
+              |{{ item }}
+      .p-vue-form__item
+        .p-vue-form__item-head
+          .p-vue-form__item-inner
+            |select
+            .c-require *
+        .p-vue-form__item-body
+          .p-vue-form__item-inner(v-show = 'step == 0')
+            select(
+              name = 'select[]'
+              v-model = 'input.select.value'
+              @change = 'validate("select")'
+            )
+              option(value = 'Select A')
+                |Select A
+              option(value = 'Select B')
+                |Select B
+              option(value = 'Select C')
+                |Select C
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
+            |{{ input.select.value }}
+          .p-vue-form__error(v-show = 'input.select.validation == false')
+            span(v-for = 'item in input.select.error')
+              |{{ item }}
+      .p-vue-form__item
+        .p-vue-form__item-head
+          .p-vue-form__item-inner
+            |attachment file
+            br
+            small
+              |only jpeg/png/gif
+        .p-vue-form__item-body
+          .p-vue-form__item-inner(v-show = 'step == 0')
+            input(
+              type = 'file'
+              name = 'file'
+              @change = 'getFile(event, "file")'
+              )
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
+            span(v-for = 'item in input.file.value')
+              |{{ item.name }}
+          .p-vue-form__error(v-show = 'input.file.validation == false')
+            span(v-for = 'item in input.file.error')
+              |{{ item }}
+      .p-vue-form__item
+        .p-vue-form__item-head
+          .p-vue-form__item-inner
+            |multi column text
+            .c-require *
+        .p-vue-form__item-body
+          .p-vue-form__item-inner(v-show = 'step == 0')
+            textarea(
+              name = 'multiText'
+              cols = '60'
+              rows = '8'
+              v-model = 'input.multiText.value'
+              class = 'p-vue-form__textarea'
+              @focusout = 'validate("multiText")'
+            )
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
+            |{{ input.multiText.value }}
+          .p-vue-form__error.p-vue-form__error--next-input(v-show = 'input.multiText.validation == false')
+            span(v-for = 'item in input.multiText.error')
+              |{{ item }}
+
+    .p-vue-form__complete(v-show = 'step == 2')
+      p
+        |thank you for a message!
+
+    .p-vue-form__submit
+      .p-vue-form__submit-wrap(v-show = 'step == 0')
+        input(
+          type = 'submit'
+          value = 'Confirm input content'
+          class = 'p-vue-form__button p-vue-form__button--submit'
+        )
+      .p-vue-form__submit-wrap(v-show = 'step == 1')
+        input(
+          type = 'button'
+          value = 'Back'
+          class = 'p-vue-form__button p-vue-form__button--utility'
+          @click = 'back'
+        )
+        input(
+          type = 'submit'
+          value = 'Send Mail'
+          class = 'p-vue-form__button p-vue-form__button--submit'
+        )
+      .p-vue-form__submit-wrap(v-show = 'step == 2')
+        input(
+          type = 'button'
+          value = 'Back to Home'
+          class = 'p-vue-form__button p-vue-form__button--submit'
+          @click = 'reset'
+        )
+
+    .p-vue-form__processing(v-show = 'isProcessing === true')
+      .p-vue-form__processing__icon
 </template>
 
 <script>

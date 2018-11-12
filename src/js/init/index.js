@@ -5,5 +5,6 @@ export default function() {
   new Vue({
     el: '#vue-form',
     components: { Form },
+    template: '<Form/>',
   });
 };
