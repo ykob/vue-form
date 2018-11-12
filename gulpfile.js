@@ -33,6 +33,7 @@ gulp.task('default', ['predefault'], () => {
   $.watch(
     [
       `./${DIR.SRC}/**/*.js`,
+      `./${DIR.SRC}/**/*.vue`,
     ],
     () => {
       gulp.start(['scripts'])
