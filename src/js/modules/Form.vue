@@ -7,13 +7,9 @@
     h1.p-vue-form__head
       |vue-form
 
-    .p-vue-form__step
-      .p-vue-form__step-item(:class='{ "is-current" : step == 0 }')
-        |Step1 : Input
-      .p-vue-form__step-item(:class='{ "is-current" : step == 1 }')
-        |Step2 : Confirm
-      .p-vue-form__step-item(:class='{ "is-current" : step == 2 }')
-        |Step3 : Finish
+    FormStep(
+      :step = 'step'
+      )
 
     .p-vue-form__contents(v-show = 'step < 2')
       .p-vue-form__item
@@ -241,9 +237,13 @@
 
 <script>
   import axios from 'axios';
+  import FormStep from './FormStep.vue';
 
   export default {
     name: 'Form',
+    components: {
+      FormStep,
+    },
     data: function() {
       return {
         input: {
