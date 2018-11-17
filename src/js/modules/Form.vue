@@ -204,6 +204,10 @@
       p
         |thank you for a message!
 
+    .p-vue-form__error(v-show = 'step == 3')
+      p
+        |{{ this.error }}
+
     .p-vue-form__submit
       .p-vue-form__submit-wrap(v-show = 'step == 0')
         input(
@@ -291,6 +295,7 @@
           },
         },
         step: 0,
+        error: '',
         isProcessing: false,
       }
     },
@@ -437,7 +442,8 @@
               })
               .catch((error) => {
                 // failed to post.
-                console.error(`A post by axios had an error : ${error.response.status} ${error.response.statusText}`);
+                this.error = `A post by axios had an error : ${error.response.status} ${error.response.statusText}`;
+                console.error(this.error);
                 this.step = 3;
               })
               .then(() => {
