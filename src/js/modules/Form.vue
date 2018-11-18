@@ -204,7 +204,7 @@
       p
         |thank you for a message!
 
-    .p-vue-form__error(v-show = 'step == 3')
+    .p-vue-form__submit-error(v-show = 'step == 3')
       p
         |{{ this.error }}
 
@@ -227,7 +227,7 @@
           value = 'Send Mail'
           class = 'p-vue-form__button p-vue-form__button--submit'
         )
-      .p-vue-form__submit-wrap(v-show = 'step == 2')
+      .p-vue-form__submit-wrap(v-show = 'step >= 2')
         input(
           type = 'button'
           value = 'Back to Home'
