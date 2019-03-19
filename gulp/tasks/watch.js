@@ -26,7 +26,7 @@ gulp.task('watch', () => {
 
   gulp.watch(
     [
-      `./${DIR.SRC}/**/*.js`,
+      `./${DIR.SRC}/**/*.{js,vue}`,
     ],
     gulp.series('scripts', reload)
   );
