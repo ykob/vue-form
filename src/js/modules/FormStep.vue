@@ -1,15 +1,15 @@
 <template lang="pug">
   .p-vue-form-step
     .p-vue-form-step__item(
-      :class='{ "is-current" : step == 0 }'
+      :class = '{ "is-current" : step == 0 }'
       )
       |Step1 : Input
     .p-vue-form-step__item(
-      :class='{ "is-current" : step == 1 }'
+      :class = '{ "is-current" : step == 1 }'
       )
       |Step2 : Confirm
     .p-vue-form-step__item(
-      :class='{ "is-current" : step == 2 }'
+      :class = '{ "is-current" : step == 2 }'
       )
       |Step3 : Finish
 </template>

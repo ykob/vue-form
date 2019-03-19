@@ -208,45 +208,29 @@
       p
         |{{ this.error }}
 
-    .p-vue-form__submit
-      .p-vue-form__submit-wrap(v-show = 'step == 0')
-        input(
-          type = 'submit'
-          value = 'Confirm input content'
-          class = 'p-vue-form__button p-vue-form__button--submit'
-        )
-      .p-vue-form__submit-wrap(v-show = 'step == 1')
-        input(
-          type = 'button'
-          value = 'Back'
-          class = 'p-vue-form__button p-vue-form__button--utility'
-          @click = 'back'
-        )
-        input(
-          type = 'submit'
-          value = 'Send Mail'
-          class = 'p-vue-form__button p-vue-form__button--submit'
-        )
-      .p-vue-form__submit-wrap(v-show = 'step >= 2')
-        input(
-          type = 'button'
-          value = 'Back to Home'
-          class = 'p-vue-form__button p-vue-form__button--submit'
-          @click = 'reset'
-        )
+    FormSubmit(
+      :step = 'step'
+      :back = 'back'
+      :reset = 'reset'
+      )
 
-    .p-vue-form__processing(v-show = 'isProcessing === true')
-      .p-vue-form__processing__icon
+    FormProcessing(
+      v-show = 'isProcessing === true'
+      )
 </template>
 
 <script>
   import axios from 'axios';
   import FormStep from './FormStep.vue';
+  import FormSubmit from './FormSubmit.vue';
+  import FormProcessing from './FormProcessing.vue';
 
   export default {
     name: 'Form',
     components: {
       FormStep,
+      FormSubmit,
+      FormProcessing,
     },
     data: function() {
       return {
