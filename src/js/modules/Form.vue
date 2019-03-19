@@ -204,9 +204,10 @@
       p
         |thank you for a message!
 
-    .p-vue-form__submit-error(v-show = 'step == 3')
-      p
-        |{{ this.error }}
+    FormSubmitError(
+      v-show = 'step == 3'
+      :error = 'error'
+      )
 
     FormSubmit(
       :step = 'step'
@@ -222,6 +223,7 @@
 <script>
   import axios from 'axios';
   import FormStep from './FormStep.vue';
+  import FormSubmitError from './FormSubmitError.vue';
   import FormSubmit from './FormSubmit.vue';
   import FormProcessing from './FormProcessing.vue';
 
@@ -230,6 +232,7 @@
     components: {
       FormStep,
       FormSubmit,
+      FormSubmitError,
       FormProcessing,
     },
     data: function() {
