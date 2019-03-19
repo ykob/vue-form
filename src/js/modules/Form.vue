@@ -19,12 +19,9 @@
             .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show = 'step == 0')
-            input(
-              type = 'text'
+            InputText(
               name = 'name'
-              value = ''
               placeholder = 'input your name'
-              class = 'p-vue-form__input'
               v-model = 'input.name.value'
               @focusout = 'validate("name")'
             )
@@ -40,12 +37,10 @@
             .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show = 'step == 0')
-            input(
-              type = 'email'
+            InputText(
               name = 'email'
-              value = ''
               placeholder = 'input your email'
-              class = 'p-vue-form__input'
+              type = 'email'
               v-model = 'input.email.value'
               @focusout = 'validate("email")'
             )
@@ -62,30 +57,24 @@
         .p-vue-form__item-body
           .p-vue-form__item-inner.p-vue-form__label-wrap(v-show = 'step == 0')
             label
-              input(
-                type = 'radio'
+              InputRadio(
                 name = 'radio'
                 value = 'Radio A'
                 v-model = 'input.radio.value'
-                class = 'p-vue-form__radio'
               )
               |Radio A
             label
-              input(
-                type = 'radio'
+              InputRadio(
                 name = 'radio'
                 value = 'Radio B'
                 v-model = 'input.radio.value'
-                class = 'p-vue-form__radio'
               )
               |Radio B
             label
-              input(
-                type = 'radio'
+              InputRadio(
                 name = 'radio'
                 value = 'Radio C'
                 v-model = 'input.radio.value'
-                class = 'p-vue-form__radio'
               )
               |Radio C
           .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
@@ -186,12 +175,11 @@
             .c-require *
         .p-vue-form__item-body
           .p-vue-form__item-inner(v-show = 'step == 0')
-            textarea(
+            Textarea(
               name = 'multiText'
               cols = '60'
               rows = '8'
               v-model = 'input.multiText.value'
-              class = 'p-vue-form__textarea'
               @focusout = 'validate("multiText")'
             )
           .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
@@ -227,6 +215,9 @@
   import FormSubmitError from './FormSubmitError.vue';
   import FormSubmit from './FormSubmit.vue';
   import FormProcessing from './FormProcessing.vue';
+  import InputText from './InputText.vue';
+  import InputRadio from './InputRadio.vue';
+  import Textarea from './Textarea.vue';
 
   export default {
     name: 'Form',
@@ -236,6 +227,9 @@
       FormSubmit,
       FormSubmitError,
       FormProcessing,
+      InputText,
+      InputRadio,
+      Textarea,
     },
     data: function() {
       return {
@@ -450,4 +444,83 @@
 </script>
 
 <style lang="scss">
+  @import "../../css/foundation/_mixin-utils";
+
+  .p-vue-form {
+    max-width: 800px;
+    margin: 100px auto;
+    @include fontSize(14);
+    &__head {
+      margin: 0 0 5rem;
+      font-weight: 400;
+      text-align: center;
+      letter-spacing: 0.14em;
+      @include fontSize(32);
+    }
+    &__item {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+      &-head {
+        width: 30%;
+        box-sizing: border-box;
+        padding: 1rem 0;
+      }
+      &-body {
+        width: 70%;
+        padding: 1rem 0;
+      }
+      &-inner {
+        padding: 0.75rem 0;
+      }
+    }
+    &__checkbox {
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+    &__label-wrap {
+      display: flex;
+      label {
+        display: block;
+        margin-right: 2rem;
+      }
+    }
+    &__error {
+      color: #d33;
+      font-weight: 700;
+      &--next-input {
+        margin-top: 0.5rem;
+      }
+    }
+    &__confirm {
+      white-space: pre-wrap;
+      &-item {
+        display: inline-block;
+        &:after {
+          content: '/';
+          margin: 0 1rem;
+        }
+        &:last-of-type {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+    &__button {
+      appearance: none;
+      margin: 0 10px;
+      padding: 1.2rem 3rem;
+      border: 0;
+      border-radius: 4px;
+      letter-spacing: 0.1rem;
+      &--submit {
+        color: #fff;
+        background-color: #69c592;
+      }
+      &--utility {
+        color: #fff;
+        background-color: #aaa;
+      }
+    }
+  }
 </style>
