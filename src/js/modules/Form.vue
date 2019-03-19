@@ -200,9 +200,9 @@
             span(v-for = 'item in input.multiText.error')
               |{{ item }}
 
-    .p-vue-form__complete(v-show = 'step == 2')
-      p
-        |thank you for a message!
+    FormComplete(
+      v-show = 'step == 2'
+      )
 
     FormSubmitError(
       v-show = 'step == 3'
@@ -223,6 +223,7 @@
 <script>
   import axios from 'axios';
   import FormStep from './FormStep.vue';
+  import FormComplete from './FormComplete.vue';
   import FormSubmitError from './FormSubmitError.vue';
   import FormSubmit from './FormSubmit.vue';
   import FormProcessing from './FormProcessing.vue';
@@ -231,6 +232,7 @@
     name: 'Form',
     components: {
       FormStep,
+      FormComplete,
       FormSubmit,
       FormSubmitError,
       FormProcessing,
