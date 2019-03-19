@@ -52,6 +52,25 @@
       .p-vue-form__item
         .p-vue-form__item-head
           .p-vue-form__item-inner
+            |email (confirm)
+            .c-require *
+        .p-vue-form__item-body
+          .p-vue-form__item-inner(v-show = 'step == 0')
+            InputText(
+              name = 'emailConfirm'
+              placeholder = 'input your email'
+              type = 'email'
+              v-model = 'input.emailConfirm.value'
+              @focusout = 'validate("emailConfirm")'
+            )
+          .p-vue-form__item-inner.p-vue-form__confirm(v-show = 'step == 1')
+            |{{ input.emailConfirm.value }}
+          .p-vue-form__error.p-vue-form__error--next-input(v-show = 'input.emailConfirm.validation == false')
+            span(v-for = 'item in input.emailConfirm.error')
+              |{{ item }}
+      .p-vue-form__item
+        .p-vue-form__item-head
+          .p-vue-form__item-inner
             |radio button
             .c-require *
         .p-vue-form__item-body
@@ -246,6 +265,12 @@
             validation: null,
             error: []
           },
+          emailConfirm: {
+            default: '',
+            value: null,
+            validation: null,
+            error: []
+          },
           radio: {
             default: 'Radio A',
             value: null,
@@ -322,6 +347,11 @@
         if (!valid) input.error.push('メールアドレスを入力してください。');
         if (input.validation === true || input.validation === null) input.validation = valid;
       },
+      matchMailConfirm: function(input, inputTarget) {
+        const valid = input.value === inputTarget.value;
+        if (!valid && !!input.value) input.error.push('入力されたメールアドレスが一致しません。');
+        if (input.validation === true || input.validation === null) input.validation = valid;
+      },
       matchNumber: function(input) {
         const valid = (String(input.value).length === 0) || !!String(input.value).match(/^[0-9０-９]+$/);
         if (!valid) input.error.push('数値を入力してください。');
@@ -367,6 +397,18 @@
             this.initInput(this.input.email);
             this.matchRequire(this.input.email);
             this.matchMail(this.input.email);
+            if (this.input.emailConfirm.value !== '') {
+              this.initInput(this.input.emailConfirm);
+              this.matchRequire(this.input.emailConfirm);
+              this.matchMail(this.input.emailConfirm);
+              this.matchMailConfirm(this.input.emailConfirm, this.input.email);
+            }
+            break;
+          case 'emailConfirm':
+            this.initInput(this.input.emailConfirm);
+            this.matchRequire(this.input.emailConfirm);
+            this.matchMail(this.input.emailConfirm);
+            this.matchMailConfirm(this.input.emailConfirm, this.input.email);
             break;
           case 'radio':
             this.initInput(this.input.radio);
