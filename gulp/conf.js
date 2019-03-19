@@ -12,29 +12,16 @@ const DIR = module.exports.DIR =  {
 };
 
 module.exports.serve = {
-  dest: {
+  connectPhp: {
+    base: DIR.DEST,
+  },
+  browserSync: {
+    proxy: {
+      target: '127.0.0.1:8000',
+    },
     notify: false,
     startPath: `${DIR.PATH}/`,
     ghostMode: false,
-    server: {
-      baseDir: DIR.DEST,
-      index: 'index.html',
-      routes: {
-        [DIR.PATH]: `${DIR.DEST}${DIR.PATH}/`
-      }
-    }
-  },
-  build: {
-    notify: false,
-    startPath: DIR.PATH,
-    ghostMode: false,
-    server: {
-      baseDir: DIR.BUILD,
-      index: 'index.html',
-      routes: {
-        [DIR.PATH]: `${DIR.BUILD}${DIR.PATH}/`
-      }
-    }
   }
 };
 

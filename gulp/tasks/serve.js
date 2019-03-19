@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const connect = require('gulp-connect-php');
 const browserSync = require('browser-sync');
 const path = require("path");
 const slash = require('slash');
@@ -37,10 +38,8 @@ const pugMiddleWare = (req, res, next) => {
 }
 
 gulp.task('serve',()=> {
-  if (process.env.NODE_ENV == 'production') {
-    browserSync(conf.build);
-  } else {
-    conf.dest.server.middleware = [pugMiddleWare];
-    browserSync(conf.dest);
-  }
+  connect.server(conf.connectPhp, function() {
+    conf.browserSync.proxy.middleware = [pugMiddleWare];
+    browserSync(conf.browserSync);
+  });
 });
