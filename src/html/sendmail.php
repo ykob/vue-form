@@ -104,7 +104,7 @@
   $recipient_admin = "info@tplh.net";
 
   // Set the email subject.
-  $subject_admin = "$name 様よりお問い合わせがありました。";
+  $subject_admin = mb_encode_mimeheader("$name 様よりお問い合わせがありました。", "UTF-8");
 
   // Build the email content.
   $email_content_admin = "ウェブサイトのフォームからお問い合わせがありました。\n内容は以下のとおりです。\n\n";
@@ -114,7 +114,7 @@
   // Build the email headers.
   $email_headers_admin = '';
   $email_headers_admin .= $email_headers;
-  $email_headers_admin .= "From: $name <$email>";
+  $email_headers_admin .= "From: ". mb_encode_mimeheader($name, "UTF-8"). " <$email>";
 
   // ------------------------------------
   // For User
@@ -124,7 +124,7 @@
   $recipient_user = $email;
 
   // Set the email subject.
-  $subject_user = "$name 様 お問い合わせありがとうございました。";
+  $subject_user = mb_encode_mimeheader("$name 様 お問い合わせありがとうございました。", "UTF-8");
 
   // Build the email content.
   $email_content_user  = "$name 様\n\n";
@@ -135,7 +135,7 @@
   // Build the email headers.
   $email_headers_user = '';
   $email_headers_user .= $email_headers;
-  $email_headers_user .= "From: yoichi kobayashi <info@tplh.net>";
+  $email_headers_user .= "From: ". mb_encode_mimeheader("yoichi kobayashi", "UTF-8"). " <info@tplh.net>";
 
   // ------------------------------------
   // Send Mail
